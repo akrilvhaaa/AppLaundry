@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import applaundry.Koneksi;
 import applaundry.ResultSetTableModel;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -125,17 +126,11 @@ public class Pelanggan_laundry extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setMaximizable(true);
         setTitle("Pelanggan");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setText("Cari");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextField1KeyReleased(evt);
@@ -179,6 +174,11 @@ public class Pelanggan_laundry extends javax.swing.JInternalFrame {
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
+            }
+        });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable1KeyPressed(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -345,10 +345,6 @@ public class Pelanggan_laundry extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         // TODO add your handling code here:
         cari();
@@ -455,6 +451,20 @@ public class Pelanggan_laundry extends javax.swing.JInternalFrame {
         String reportName = "pelanggan";
         dbCon.createReport(reportName, null, false);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            addsimpan.setVisible(false);
+            ubahsimpan.setVisible(true);
+            coltbl = jTable1.getSelectedRow();
+            jTextField2.setText(String.valueOf(jTable1.getValueAt(coltbl, 0)));
+            jTextField3.setText(String.valueOf(jTable1.getValueAt(coltbl, 1)));
+            jTextArea1.setText(String.valueOf(jTable1.getValueAt(coltbl, 2)));
+            jTextField4.setText(String.valueOf(jTable1.getValueAt(coltbl, 3)));
+            jComboBox1.setSelectedItem(String.valueOf(jTable1.getValueAt(coltbl, 4)));
+        }
+    }//GEN-LAST:event_jTable1KeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addsimpan;

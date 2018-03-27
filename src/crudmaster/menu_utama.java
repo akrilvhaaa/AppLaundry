@@ -335,12 +335,12 @@ public class menu_utama extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        Penerimaan_laundry pnl = Penerimaan_laundry.getInstance();
-        pnl.pack();
-        if (pnl.isVisible()) {
+        Karyawan emp = Karyawan.getInstance();
+        emp.pack();
+        if (emp.isVisible()) {
         } else {
-            jDesktopPane1.add(pnl);
-            pnl.setVisible(true);
+            jDesktopPane1.add(emp);
+            emp.setVisible(true);
         } 
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -361,23 +361,25 @@ public class menu_utama extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
-        Item_laundry csr = Item_laundry.getInstance();
-        csr.pack();
-        if (csr.isVisible()) {
+        Item_laundry itm = Item_laundry.getInstance();
+        itm.pack();
+        if (itm.isVisible()) {
         } else {
-            jDesktopPane1.add(csr);
-            csr.setVisible(true);
+            jDesktopPane1.add(itm);
+            itm.setVisible(true);
+            itm.jTabbedPane1.setSelectedIndex(1);
         } 
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
-        Item_laundry csr = Item_laundry.getInstance();
-        csr.pack();
-        if (csr.isVisible()) {
+        Item_laundry itm = Item_laundry.getInstance();
+        itm.pack();
+        if (itm.isVisible()) {
         } else {
-            jDesktopPane1.add(csr);
-            csr.setVisible(true);
+            jDesktopPane1.add(itm);
+            itm.setVisible(true);
+            itm.jTabbedPane1.setSelectedIndex(0);
         }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
@@ -432,34 +434,34 @@ public class menu_utama extends javax.swing.JFrame {
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         // TODO add your handling code here:
-        Proses_laundry pll = Proses_laundry.getInstance();
-        pll.pack();
-        if (pll.isVisible()) {
+        Proses_laundry prl = Proses_laundry.getInstance();
+        prl.pack();
+        if (prl.isVisible()) {
         } else {
-            jDesktopPane1.add(pll);
-            pll.setVisible(true);
+            jDesktopPane1.add(prl);
+            prl.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         // TODO add your handling code here:
-        Laundry_selesai pll = Laundry_selesai.getInstance();
-        pll.pack();
-        if (pll.isVisible()) {
+        Laundry_selesai lds = Laundry_selesai.getInstance();
+        lds.pack();
+        if (lds.isVisible()) {
         } else {
-            jDesktopPane1.add(pll);
-            pll.setVisible(true);
+            jDesktopPane1.add(lds);
+            lds.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
         // TODO add your handling code here:
-        Pendapatan_laundry pll = Pendapatan_laundry.getInstance();
-        pll.pack();
-        if (pll.isVisible()) {
+        Pendapatan_laundry pdl = Pendapatan_laundry.getInstance();
+        pdl.pack();
+        if (pdl.isVisible()) {
         } else {
-            jDesktopPane1.add(pll);
-            pll.setVisible(true);
+            jDesktopPane1.add(pdl);
+            pdl.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
