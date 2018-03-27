@@ -48,21 +48,56 @@ public class Laundry_selesai extends javax.swing.JInternalFrame {
     
     public void StartRun(){
         dbCon = new Koneksi();
+        jButton1.setEnabled(false);
         count_dataTable();
         label();
-        
         loadtable_laundry();
     }
     
     public void loadtable_laundry(){
-        try{                
-            rs= dbCon.eksekusiQuery("select id_transaksi, nama_pelanggan,"
-                    + "tanggal_masuk, tanggal_selesai, total, uang_muka,"
-                    + "tanggal_ambil, nama_pengambil from view_laundry "
-                + "where status_laundry = 'Selesai' ");
-            jTable1.setModel(new ResultSetTableModel(rs));
-        }catch(Exception ex)
-        {}
+        String pilihan = (String) jComboBox1.getSelectedItem();
+        
+        if (pilihan.equals("Semua Laundry")){
+            jButton1.setEnabled(false);
+            try{                
+                rs= dbCon.eksekusiQuery("select id_transaksi, nama_pelanggan,"
+                        + "tanggal_masuk, tanggal_selesai, total, uang_muka,"
+                        + "tanggal_ambil, nama_pengambil from view_laundry");
+                jTable1.setModel(new ResultSetTableModel(rs));
+            }catch(Exception ex)
+            {}
+        } else if (pilihan.equals("Laundry Selesai")){
+            jButton1.setEnabled(true);
+            try{                
+                rs= dbCon.eksekusiQuery("select id_transaksi, nama_pelanggan,"
+                        + "tanggal_masuk, tanggal_selesai, total, uang_muka,"
+                        + "tanggal_ambil, nama_pengambil from view_laundry "
+                    + "where status_laundry = 'Selesai' ");
+                jTable1.setModel(new ResultSetTableModel(rs));
+            }catch(Exception ex)
+            {}
+        } else if (pilihan.equals("Laundry Belum Diambil")){
+            jButton1.setEnabled(true);
+            try{                
+                rs= dbCon.eksekusiQuery("select id_transaksi, nama_pelanggan,"
+                        + "tanggal_masuk, tanggal_selesai, total, uang_muka,"
+                        + "tanggal_ambil, nama_pengambil from view_laundry "
+                    + "where nama_pengambil = ''");
+                jTable1.setModel(new ResultSetTableModel(rs));
+            }catch(Exception ex)
+            {}
+        } else if (pilihan.equals("Laundry Lunas")){
+            jButton1.setEnabled(true);
+            try{                
+                rs= dbCon.eksekusiQuery("select id_transaksi, nama_pelanggan,"
+                        + "tanggal_masuk, tanggal_selesai, total, uang_muka,"
+                        + "tanggal_ambil, nama_pengambil from view_laundry "
+                    + "where status_bayar = 'Lunas'");
+                jTable1.setModel(new ResultSetTableModel(rs));
+            }catch(Exception ex)
+            {}
+        }
+        
     }
     
     public void count_dataTable(){
@@ -253,6 +288,7 @@ public class Laundry_selesai extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox();
 
         setClosable(true);
         setIconifiable(true);
@@ -561,6 +597,18 @@ public class Laundry_selesai extends javax.swing.JInternalFrame {
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Semua Laundry", "Laundry Selesai", "Laundry Belum Diambil", "Laundry Lunas" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
+        jComboBox1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jComboBox1PropertyChange(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -570,23 +618,22 @@ public class Laundry_selesai extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(layout.createSequentialGroup()
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel20, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(jLabel20, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                        .add(0, 0, Short.MAX_VALUE)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                                .add(0, 0, Short.MAX_VALUE)
-                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                                        .add(jPanel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 273, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                        .add(jPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 327, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(jPanel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 273, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                                        .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .add(jButton1)))))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)))
+                                .add(jPanel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 273, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                .add(jPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 327, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jPanel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 273, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                                .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .add(jComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                .add(jButton1)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -598,7 +645,9 @@ public class Laundry_selesai extends javax.swing.JInternalFrame {
                 .add(jSeparator2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jButton1)
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jButton1)
+                        .add(jComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -615,12 +664,32 @@ public class Laundry_selesai extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String reportName="LaundrySelesai";
-        dbCon.createReport(reportName, null, false);
+        int param = jComboBox1.getSelectedIndex();
+            
+        if (param == 1){
+            String reportName="LaundrySelesai";
+            dbCon.createReport(reportName, null, false);
+        } else if (param == 2){
+            String reportName="LaundryBelumDiambil";
+            dbCon.createReport(reportName, null, false);
+        } else if (param == 3){
+            String reportName="LaundryLunas";
+            dbCon.createReport(reportName, null, false);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jComboBox1PropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1PropertyChange
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        // TODO add your handling code here:
+        loadtable_laundry();
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
