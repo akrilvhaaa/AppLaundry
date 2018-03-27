@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import applaundry.Koneksi;
 import applaundry.ResultSetTableModel;
+import java.awt.event.KeyEvent;
 /**
  *
  * @author akrilvha
@@ -64,8 +65,8 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
     
     public void loadtable_laundry(){
         try{                
-            String [] kolom = {"id_transaksi", "nama_pelanggan","karyawan_cuci","karyawan_setrika",
-                "tanggal_masuk","tanggal_selesai","status_laundry"};
+            String [] kolom = {"id_transaksi", "nama_pelanggan","karyawan_cuci as pencuci","karyawan_setrika as penyetrika",
+                "DATE(tanggal_masuk) as tanggal_masuk","DATE(tanggal_selesai) as tanggal_selesai","status_laundry"};
             rs= dbCon.querySelect(kolom, "view_laundry");
             jTable1.setModel(new ResultSetTableModel(rs));
         }catch(Exception ex)
@@ -86,10 +87,14 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
     public void cari(){
         String cari = txtCari.getText();
         
-        rs = dbCon.eksekusiQuery("select * from view_laundry "
-                + "where id_transaksi like '%"+cari+"%' OR nama_pelanggan like '%"+cari+"%'");
+        String [] kolom = {"id_transaksi", "nama_pelanggan","karyawan_cuci as pencuci","karyawan_setrika as penyetrika",
+                "DATE(tanggal_masuk) as tanggal_masuk","DATE(tanggal_selesai) as tanggal_selesai","status_laundry"};
+        rs = dbCon.fcSelectCommand(kolom, "view_laundry", "id_transaksi like '%"+cari+"%' OR nama_pelanggan like '%"+cari+"%'");
         jTable1.setModel(new ResultSetTableModel(rs)); 
-    
+        
+         if(jTable1.getRowCount() != 0){
+            jTable1.setRowSelectionInterval(0, 0);
+        }
     }
     
     public void getid_kar(){
@@ -154,6 +159,10 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
         jLabel20 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
 
+        setClosable(true);
+        setIconifiable(true);
+        setTitle("Proses Laundry");
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -168,6 +177,11 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
+            }
+        });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable1KeyPressed(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -271,6 +285,12 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Cari Data Pada Tabel");
 
+        txtCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCariKeyReleased(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -318,7 +338,7 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
 
         jLabel20.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("PENGAMBILAN LAUNDRY");
+        jLabel20.setText("PROSES LAUNDRY");
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -326,15 +346,18 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .add(6, 6, 6)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(jLabel20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 711, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jSeparator2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 675, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jSeparator2)
                     .add(layout.createSequentialGroup()
-                        .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 711, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                            .add(jLabel20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 711, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(layout.createSequentialGroup()
+                                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 711, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -347,7 +370,7 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
                     .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -367,8 +390,24 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
                     coltbl = jTable1.getSelectedRow();
                     txtNota.setText(String.valueOf(jTable1.getValueAt(coltbl, 0)));
                     txtNama.setText(String.valueOf(jTable1.getValueAt(coltbl, 1)));
-                    jComboBox1.setSelectedItem(jTable1.getValueAt(coltbl, 2));
-                    jComboBox2.setSelectedItem(jTable1.getValueAt(coltbl, 3));
+                    
+                    
+                    if(jTable1.getValueAt(coltbl, 2) == null && jTable1.getValueAt(coltbl, 3)==null){
+                        if(jTable1.getValueAt(coltbl, 2) == null){/*do nothing */}
+                        else{
+                            jComboBox1.setSelectedItem(jTable1.getValueAt(coltbl, 2));
+                        }
+                        
+                        if(jTable1.getValueAt(coltbl, 3)==null){/*do nothing */}
+                        else{
+                            jComboBox2.setSelectedItem(jTable1.getValueAt(coltbl, 3));
+                        }
+                    }
+                    else{
+                        jComboBox1.setSelectedItem(jTable1.getValueAt(coltbl, 2));
+                        jComboBox2.setSelectedItem(jTable1.getValueAt(coltbl, 3));
+                    }
+                    
                     jComboBox3.setSelectedItem(jTable1.getValueAt(coltbl, 6));
 
                 }
@@ -411,6 +450,43 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
     private void txtNamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNamaActionPerformed
+
+    private void txtCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCariKeyReleased
+        // TODO add your handling code here:
+        cari();
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+                 jTable1.requestFocus(true);
+            }
+    }//GEN-LAST:event_txtCariKeyReleased
+
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            coltbl = jTable1.getSelectedRow();
+            txtNota.setText(String.valueOf(jTable1.getValueAt(coltbl, 0)));
+            txtNama.setText(String.valueOf(jTable1.getValueAt(coltbl, 1)));
+
+
+            if (jTable1.getValueAt(coltbl, 2) == null && jTable1.getValueAt(coltbl, 3) == null) {
+                if (jTable1.getValueAt(coltbl, 2) == null) {/*do nothing */
+
+                } else {
+                    jComboBox1.setSelectedItem(jTable1.getValueAt(coltbl, 2));
+                }
+
+                if (jTable1.getValueAt(coltbl, 3) == null) {/*do nothing */
+
+                } else {
+                    jComboBox2.setSelectedItem(jTable1.getValueAt(coltbl, 3));
+                }
+            } else {
+                jComboBox1.setSelectedItem(jTable1.getValueAt(coltbl, 2));
+                jComboBox2.setSelectedItem(jTable1.getValueAt(coltbl, 3));
+            }
+
+            jComboBox3.setSelectedItem(jTable1.getValueAt(coltbl, 6));
+        }
+    }//GEN-LAST:event_jTable1KeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

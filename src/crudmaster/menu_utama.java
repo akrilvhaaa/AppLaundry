@@ -4,13 +4,13 @@
  */
 package crudmaster;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -330,7 +330,13 @@ public class menu_utama extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        
+//        Administrator adm = Administrator.getInstance();
+//        adm.pack();
+//        if (adm.isVisible()) {
+//        } else {
+//            jDesktopPane1.add(adm);
+//            adm.setVisible(true);
+//        }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
