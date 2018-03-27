@@ -61,19 +61,24 @@ public class Item_laundry extends javax.swing.JInternalFrame {
         jTextField2.setText("");
         jTextField3.setText("");
         jTextField4.setText("");
+        jTextField6.setText("");
         jTextField7.setText("");
+        jTextField1.disable();
+        jTextField6.disable();
         
         jButton1.setVisible(true);
         jButton2.setVisible(false);
         jButton5.setVisible(true);
         jButton6.setVisible(false);
+        jButton3.setEnabled(false);
+        jButton7.setEnabled(false);
 
-        
         buttonGroup1.clearSelection();
         
-        jt_cari.setText("");
         jComboBox2.setSelectedIndex(0);
         jComboBox3.setSelectedIndex(0);
+        
+        autoID();
     }
     
     //======================LOAD DATA======================// 
@@ -448,7 +453,13 @@ public class Item_laundry extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search_1.png"))); // NOI18N
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Refresh.png"))); // NOI18N
+        jButton9.setBorderPainted(false);
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout jPanel5Layout = new org.jdesktop.layout.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -467,10 +478,11 @@ public class Item_laundry extends javax.swing.JInternalFrame {
             jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jComboBox2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jt_cari, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jButton9, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 29, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jButton9, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 29, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jComboBox2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jt_cari, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -556,6 +568,11 @@ public class Item_laundry extends javax.swing.JInternalFrame {
         tbl_pewangi.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbl_pewangiMouseClicked(evt);
+            }
+        });
+        tbl_pewangi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tbl_pewangiKeyPressed(evt);
             }
         });
         jScrollPane2.setViewportView(tbl_pewangi);
@@ -796,6 +813,7 @@ public class Item_laundry extends javax.swing.JInternalFrame {
                     // your valueChanged overridden method
                     jButton1.setVisible(false);
                     jButton2.setVisible(true);
+                    jButton3.setEnabled(true);
                     String ukuran;
                     coltbl = tbl_harga.getSelectedRow();
                     jTextField1.setText(String.valueOf(tbl_harga.getValueAt(coltbl,0)));
@@ -900,16 +918,20 @@ public class Item_laundry extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        try{
-            String id=String.valueOf(tbl_harga.getValueAt(tbl_harga.getSelectedRow(),0));
-            dbCon.queryDelete("daftar_harga","id_item='"+id+"'");
+        String Data = jTextField2.getText();
+        int dialog = JOptionPane.showConfirmDialog(rootPane, "Anda yakin ingin menghapus data ini '"+Data+"'?", "WARNING", JOptionPane.YES_NO_OPTION);
+        if (dialog == JOptionPane.YES_OPTION){
+            try{
+                String id=String.valueOf(tbl_harga.getValueAt(tbl_harga.getSelectedRow(),0));
+                dbCon.queryDelete("daftar_harga","id_item='"+id+"'");
 
-            JOptionPane.showMessageDialog(this,"Data Sukses Di Hapus");
-        }catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,"Gagal eksekusi data");
+                JOptionPane.showMessageDialog(this,"Data Sukses Di Hapus");
+            }catch (Exception ex) {
+                JOptionPane.showMessageDialog(this,"Gagal eksekusi data");
+            }
+
+            StartRun();
         }
-
-        StartRun();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -924,7 +946,7 @@ public class Item_laundry extends javax.swing.JInternalFrame {
 
     private void tbl_pewangiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_pewangiMouseClicked
         // TODO add your handling code here:
-        tbl_harga.addMouseListener(new MouseAdapter() {
+        tbl_pewangi.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent mouseEvent) {
                 JTable table =(JTable) mouseEvent.getSource();
@@ -934,6 +956,7 @@ public class Item_laundry extends javax.swing.JInternalFrame {
                     // your valueChanged overridden method
                     jButton5.setVisible(false);
                     jButton6.setVisible(true);
+                    jButton7.setEnabled(true);
                     coltbl2 = tbl_pewangi.getSelectedRow();
                     jTextField6.setText(String.valueOf(tbl_pewangi.getValueAt(coltbl2,0)));
                     jTextField7.setText(String.valueOf(tbl_pewangi.getValueAt(coltbl2,1)));
@@ -981,21 +1004,26 @@ public class Item_laundry extends javax.swing.JInternalFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        try{
-            String id=String.valueOf(tbl_pewangi.getValueAt(tbl_pewangi.getSelectedRow(),0));
-            dbCon.queryDelete("pewangi","id_pewangi='"+id+"'");
+        String Data = jTextField7.getText();
+        int dialog = JOptionPane.showConfirmDialog(rootPane, "Anda yakin ingin menghapus data ini '"+Data+"'?", "WARNING", JOptionPane.YES_NO_OPTION);
+        if (dialog == JOptionPane.YES_OPTION){
+            try{
+                String id=String.valueOf(tbl_pewangi.getValueAt(tbl_pewangi.getSelectedRow(),0));
+                dbCon.queryDelete("pewangi","id_pewangi='"+id+"'");
 
-            JOptionPane.showMessageDialog(this,"Data Sukses Di Hapus");
-        }catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,"Gagal eksekusi data");
+                JOptionPane.showMessageDialog(this,"Data Sukses Di Hapus");
+            }catch (Exception ex) {
+                JOptionPane.showMessageDialog(this,"Gagal eksekusi data");
+            }
+
+            StartRun();
         }
-
-        StartRun();
+        
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        StartRun();
+        ClearInput();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void tbl_hargaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbl_hargaKeyPressed
@@ -1023,6 +1051,26 @@ public class Item_laundry extends javax.swing.JInternalFrame {
             jTextField4.setText(String.valueOf(tbl_harga.getValueAt(coltbl,4)));
         }
     }//GEN-LAST:event_tbl_hargaKeyPressed
+
+    private void tbl_pewangiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbl_pewangiKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            jButton5.setVisible(false);
+            jButton6.setVisible(true);
+            coltbl2 = tbl_pewangi.getSelectedRow();
+            jTextField6.setText(String.valueOf(tbl_pewangi.getValueAt(coltbl2,0)));
+            jTextField7.setText(String.valueOf(tbl_pewangi.getValueAt(coltbl2,1)));
+            jComboBox3.setSelectedItem(String.valueOf(tbl_pewangi.getValueAt(coltbl2,2)));
+        }
+
+    }//GEN-LAST:event_tbl_pewangiKeyPressed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        jt_cari.setText("");
+        jComboBox2.setSelectedIndex(0);
+        count_dataTable();
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
