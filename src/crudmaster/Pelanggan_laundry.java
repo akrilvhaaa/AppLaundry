@@ -429,16 +429,22 @@ public class Pelanggan_laundry extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        try{
-            String id=String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(),0));
-            dbCon.queryDelete("pelanggan","id_pelanggan='"+id+"'");
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(this, "Apakah anda yakin untuk menghapus data ini ?", "", dialogButton);
+        if (dialogResult == 0) {
+            try {
+                String id = String.valueOf(jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+                dbCon.queryDelete("pelanggan", "id_pelanggan='" + id + "'");
 
-            JOptionPane.showMessageDialog(this,"Data Sukses Di Hapus");
-        }catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,"Gagal eksekusi data");
+                JOptionPane.showMessageDialog(this, "Data Sukses Di Hapus");
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Gagal eksekusi data");
+            }
+            StartRun();
+        } else {
+            System.out.println("No Option");
         }
-
-        StartRun();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
