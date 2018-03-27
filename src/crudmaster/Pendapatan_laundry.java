@@ -19,7 +19,9 @@ public class Pendapatan_laundry extends javax.swing.JInternalFrame {
     
     ResultSet rs;
     Koneksi dbCon;
-    int coltbl;  
+    int coltbl;
+    String kondisi, periode;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
     
     private static Pendapatan_laundry myInstance;
 
@@ -41,12 +43,32 @@ public class Pendapatan_laundry extends javax.swing.JInternalFrame {
         
     }
     
-    public void pendapatanHari(){
+    public void pendapatanPeriode(){
         try {
-            rs = dbCon.eksekusiQuery("select id_transaksi, nama_pelanggan,"
-                    + "total, tanggal_ambil from view_laundry where status_bayar='Lunas' and"
-                    + "tanggal_ambil = DATE(NOW())");
+            String pilihan = null;
+            if(jComboBox1.getSelectedIndex()==0){
+                pilihan = "hari ini";
+                rs = dbCon.eksekusiQuery("select id_transaksi, nama_pelanggan, "
+                    + "total, DATE(tanggal_ambil) from view_laundry where status_bayar='Lunas' and "
+                    + "tanggal_ambil = DATE(NOW())"); 
+            }
+            else if(jComboBox1.getSelectedIndex()==1){
+                pilihan = "sebulan terakhir";
+                rs = dbCon.eksekusiQuery("select id_transaksi, nama_pelanggan, "
+                    + "total, DATE(tanggal_ambil) from view_laundry where status_bayar='Lunas' and "
+                    + "MONTH(tanggal_ambil) = MONTH(CURRENT_DATE())"); 
+            }
+            else if(jComboBox1.getSelectedIndex()==2){
+                pilihan = "satu tahun terakhir";
+                rs = dbCon.eksekusiQuery("select id_transaksi, nama_pelanggan, "
+                    + "total, DATE(tanggal_ambil) from view_laundry where status_bayar='Lunas' and "
+                    + "YEAR(tanggal_ambil) = YEAR(CURRENT_DATE())"); 
+            }
             jTable1.setModel(new ResultSetTableModel(rs));
+            
+            if(jTable1.getRowCount() == 0){
+                JOptionPane.showMessageDialog(this,"Tidak ada transaksi "+pilihan);
+            }
         } catch (Exception e) {
         }
     }
@@ -64,7 +86,7 @@ public class Pendapatan_laundry extends javax.swing.JInternalFrame {
     
     public void PendapatanTanggal(){
         // ubah format date pada jdatechooser agar sesuai dan bisa untuk query
-        SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd");
+        
         String awal = sdf.format(jDateChooser1.getDate());
         String akhir = sdf.format(jDateChooser2.getDate());
 
@@ -95,14 +117,11 @@ public class Pendapatan_laundry extends javax.swing.JInternalFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
@@ -113,28 +132,34 @@ public class Pendapatan_laundry extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Pilihan Periode"));
+        setClosable(true);
+        setIconifiable(true);
+        setTitle("Pendapatan Laundry");
 
-        jLabel1.setText("Periode");
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Pilihan Periode"));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hari ini", "Satu Bulan Terakhir", "Satu Tahun Terakhir" }));
 
-        jLabel2.setText("Dari Tanggal");
-
         jLabel3.setText("Sampai");
 
+        buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setText("Periode");
         jRadioButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jRadioButton1MouseClicked(evt);
             }
         });
 
+        buttonGroup1.add(jRadioButton2);
+        jRadioButton2.setText("Dari Tanggal");
         jRadioButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jRadioButton2MouseClicked(evt);
             }
         });
 
+        buttonGroup1.add(jRadioButton3);
+        jRadioButton3.setText("Bulan");
         jRadioButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jRadioButton3MouseClicked(evt);
@@ -145,8 +170,6 @@ public class Pendapatan_laundry extends javax.swing.JInternalFrame {
                 jRadioButton3ActionPerformed(evt);
             }
         });
-
-        jLabel4.setText("Bulan");
 
         jLabel5.setText("Tahun");
 
@@ -163,104 +186,84 @@ public class Pendapatan_laundry extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(0, 0, Short.MAX_VALUE)
-                        .add(jButton1))
-                    .add(jPanel1Layout.createSequentialGroup()
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jPanel1Layout.createSequentialGroup()
-                                .add(jRadioButton2)
-                                .add(18, 18, 18)
-                                .add(jLabel2)
-                                .add(18, 18, 18)
-                                .add(jDateChooser1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(jPanel1Layout.createSequentialGroup()
-                                .add(jRadioButton1)
-                                .add(18, 18, 18)
-                                .add(jLabel1))
-                            .add(jPanel1Layout.createSequentialGroup()
-                                .add(jRadioButton3)
-                                .add(18, 18, 18)
-                                .add(jLabel4)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jMonthChooser1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(jRadioButton1)
+                            .add(jRadioButton3))
+                        .add(61, 61, 61))
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(jRadioButton2)
+                        .add(27, 27, 27)))
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                            .add(jMonthChooser1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                            .add(jDateChooser1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .add(18, 18, 18)
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 146, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(jPanel1Layout.createSequentialGroup()
-                                .add(56, 56, 56)
-                                .add(jLabel5)
-                                .add(18, 18, 18)
-                                .add(jYearChooser1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(jPanel1Layout.createSequentialGroup()
-                                .add(149, 149, 149)
-                                .add(jLabel3)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                .add(jDateChooser2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                        .add(14, 14, 14)))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .add(jLabel5)
+                            .add(jLabel3)))
+                    .add(jComboBox1, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .add(35, 35, 35)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jYearChooser1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(jDateChooser2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 141, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(0, 0, Short.MAX_VALUE)))
+                .add(72, 72, 72))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(jButton1)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
-                .add(14, 14, 14)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel1)
-                    .add(jComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jRadioButton1))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jRadioButton3)
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel4))
-                        .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jMonthChooser1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(jLabel5)))
-                    .add(jYearChooser1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                    .add(jComboBox1)
+                    .add(jRadioButton1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jPanel1Layout.createSequentialGroup()
-                                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                                    .add(jRadioButton2)
-                                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                                        .add(jLabel2)
-                                        .add(jLabel3)))
-                                .add(0, 6, Short.MAX_VALUE))
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .add(0, 0, Short.MAX_VALUE)
-                                .add(jDateChooser2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(jButton1))
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(7, 7, 7)
-                        .add(jDateChooser1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(0, 0, Short.MAX_VALUE))))
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jYearChooser1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(jLabel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(jMonthChooser1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jRadioButton3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                    .add(jRadioButton2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(jDateChooser1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(jDateChooser2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(jLabel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jButton1)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "id_transaksi", "nama_pelanggan", "total", "tanggal_ambil"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/save.png"))); // NOI18N
         jButton2.setText("Cetak");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -269,6 +272,9 @@ public class Pendapatan_laundry extends javax.swing.JInternalFrame {
                         .add(0, 0, Short.MAX_VALUE)
                         .add(jButton2)))
                 .addContainerGap())
+            .add(layout.createSequentialGroup()
+                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -279,7 +285,7 @@ public class Pendapatan_laundry extends javax.swing.JInternalFrame {
                 .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 244, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jButton2)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         pack();
@@ -343,13 +349,48 @@ public class Pendapatan_laundry extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         if(jRadioButton1.isSelected()){
-            pendapatanHari();
+            pendapatanPeriode();
         } else if (jRadioButton3.isSelected()){
             pendapatanBulan();
         } else if (jRadioButton2.isSelected()){
             PendapatanTanggal();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if(jRadioButton1.isSelected()){
+            if(jComboBox1.getSelectedIndex()==0){
+                dbCon.createReport("pdp_periodeHari", null, false);
+            }
+            if(jComboBox1.getSelectedIndex()==1){
+                dbCon.createReport("pdp_periodeBulan", null, false);
+            }
+            if(jComboBox1.getSelectedIndex()==2){
+                dbCon.createReport("pdp_periodeTahun", null, false);
+            }
+        } else if (jRadioButton3.isSelected()){
+            String bulan = String.valueOf(jMonthChooser1.getMonth()+1);
+            String tahun = String.valueOf(jYearChooser1.getYear());
+            
+            String [][] param = {
+                {"bulan", bulan},
+                {"tahun", tahun}
+            };
+            
+            dbCon.createReport("pendapatanBT", param, false);
+            
+        } else if (jRadioButton2.isSelected()){
+            String mulai_tgl = String.valueOf(sdf.format(jDateChooser1.getDate()));
+            String sampai_tgl = String.valueOf(sdf.format(jDateChooser2.getDate()));
+            
+            String [][] param = {
+                {"mulai_tgl", mulai_tgl},
+                {"sampai_tgl", sampai_tgl}
+            };
+            dbCon.createReport("pendapatanTanggal", param, false);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
@@ -358,10 +399,7 @@ public class Pendapatan_laundry extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private com.toedter.calendar.JMonthChooser jMonthChooser1;
     private javax.swing.JPanel jPanel1;
