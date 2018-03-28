@@ -4,6 +4,7 @@
  */
 package crudmaster;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -346,6 +347,13 @@ public class menu_utama extends javax.swing.JFrame {
         if (emp.isVisible()) {
         } else {
             jDesktopPane1.add(emp);
+            
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = emp.getSize();
+ 
+            //set center screen
+            emp.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
+            
             emp.setVisible(true);
         } 
     }//GEN-LAST:event_jMenuItem3ActionPerformed
@@ -361,6 +369,11 @@ public class menu_utama extends javax.swing.JFrame {
         if (csr.isVisible()) {
         } else {
             jDesktopPane1.add(csr);
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = csr.getSize();
+ 
+            //set center screen
+            csr.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
             csr.setVisible(true);
         } 
     }//GEN-LAST:event_jMenuItem4ActionPerformed
@@ -372,6 +385,11 @@ public class menu_utama extends javax.swing.JFrame {
         if (itm.isVisible()) {
         } else {
             jDesktopPane1.add(itm);
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = itm.getSize();
+ 
+            //set center screen
+            itm.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
             itm.setVisible(true);
             itm.jTabbedPane1.setSelectedIndex(1);
         } 
@@ -384,6 +402,11 @@ public class menu_utama extends javax.swing.JFrame {
         if (itm.isVisible()) {
         } else {
             jDesktopPane1.add(itm);
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = itm.getSize();
+ 
+            //set center screen
+            itm.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
             itm.setVisible(true);
             itm.jTabbedPane1.setSelectedIndex(0);
         }
@@ -396,6 +419,11 @@ public class menu_utama extends javax.swing.JFrame {
         if (pnl.isVisible()) {
         } else {
             jDesktopPane1.add(pnl);
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = pnl.getSize();
+ 
+            //set center screen
+            pnl.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
             pnl.setVisible(true);
         } 
     }//GEN-LAST:event_jMenuItem7ActionPerformed
@@ -407,6 +435,11 @@ public class menu_utama extends javax.swing.JFrame {
         if (abl.isVisible()) {
         } else {
             jDesktopPane1.add(abl);
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = abl.getSize();
+ 
+            //set center screen
+            abl.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
             abl.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem8ActionPerformed
@@ -445,6 +478,11 @@ public class menu_utama extends javax.swing.JFrame {
         if (prl.isVisible()) {
         } else {
             jDesktopPane1.add(prl);
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = prl.getSize();
+ 
+            //set center screen
+            prl.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
             prl.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem13ActionPerformed
@@ -456,6 +494,11 @@ public class menu_utama extends javax.swing.JFrame {
         if (lds.isVisible()) {
         } else {
             jDesktopPane1.add(lds);
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = lds.getSize();
+ 
+            //set center screen
+            lds.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
             lds.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem12ActionPerformed
@@ -467,6 +510,11 @@ public class menu_utama extends javax.swing.JFrame {
         if (pdl.isVisible()) {
         } else {
             jDesktopPane1.add(pdl);
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = pdl.getSize();
+ 
+            //set center screen
+            pdl.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
             pdl.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem14ActionPerformed
