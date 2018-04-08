@@ -253,8 +253,6 @@ public class Ambil_laundry extends javax.swing.JInternalFrame {
             }
         });
 
-        jDateChooser1.setEnabled(false);
-
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Input Nomor Nota"));
 
         jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -595,9 +593,8 @@ public class Ambil_laundry extends javax.swing.JInternalFrame {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(jPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(6, 6, 6)))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jPanel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -605,12 +602,13 @@ public class Ambil_laundry extends javax.swing.JInternalFrame {
 
     private void jTextField5KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyReleased
         // TODO add your handling code here:
-        double sisa_bayar   = Double.parseDouble(jLabel21.getText());
-        double bayar        = Double.parseDouble(jTextField5.getText());
+        float sisa_bayar   = Float.parseFloat(jLabel21.getText());
+        float bayar        = Float.parseFloat(jTextField5.getText());
+        float hasil         = bayar - sisa_bayar;
+        
+        jLabel9.setText(String.valueOf(hasil));
 
-        jLabel9.setText(String.valueOf(bayar-sisa_bayar));
-
-        if(bayar > sisa_bayar){
+        if(bayar > sisa_bayar || hasil == 0.0){
             jComboBox1.setSelectedIndex(1);
         }
         else{

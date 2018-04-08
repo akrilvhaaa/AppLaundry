@@ -141,7 +141,7 @@ public class menu_utama extends javax.swing.JFrame {
 
         jSeparator6.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jLabel6.setText("nama admin - jabatan");
+        jLabel6.setText("ADMIN - ADMIN");
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

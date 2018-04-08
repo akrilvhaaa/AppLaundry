@@ -327,7 +327,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
-            <Property name="text" type="java.lang.String" value="nama admin - jabatan"/>
+            <Property name="text" type="java.lang.String" value="ADMIN - ADMIN"/>
           </Properties>
         </Component>
       </SubComponents>
