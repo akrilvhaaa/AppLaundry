@@ -25,8 +25,8 @@ public class Penerimaan_laundry extends javax.swing.JInternalFrame {
     ResultSet rs;
     Koneksi dbCon;
     int coltbl, baris;
+    float berat,total,harga;
     int jmlTransaksi=0;
-    double harga, total, berat;
     String idpewangi, idItem;
     Object[] data;
      
@@ -176,11 +176,11 @@ public class Penerimaan_laundry extends javax.swing.JInternalFrame {
     public void totalkeseluruhan(){
         
         baris = jTable1.getRowCount();
-        total = 0;
-            for (int i=0; i<baris; i++)
+        total = 0;    
+        for (int i=0; i<baris; i++)
                 {
                     String row = String.valueOf(jTable1.getValueAt(i,5));
-                    harga = Double.parseDouble(row);
+                    harga = Float.parseFloat(row);
                     total = total + harga;
                 }
             
@@ -734,6 +734,9 @@ public class Penerimaan_laundry extends javax.swing.JInternalFrame {
 
         jLabel17.setText("Sisa Bayar");
 
+        jTextField8.setText("0.0");
+
+        jTextField9.setText("0.0");
         jTextField9.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextField9KeyReleased(evt);
@@ -1045,27 +1048,26 @@ public class Penerimaan_laundry extends javax.swing.JInternalFrame {
                 jTextField6.setBackground(Color.red);
             }
             else{
-                berat = Double.parseDouble(jTextField6.getText());
-                harga = Double.parseDouble(jTextField5.getText());
+                berat = Float.parseFloat(jTextField6.getText());
+                harga = Float.parseFloat(jTextField5.getText());
 
-                total = berat * harga ;
+                float totalbp = berat * harga;
 
                 Object[] data={  jComboBox1.getSelectedItem(),
                     jComboBox2.getSelectedItem(),
                     jTextField6.getText(),
                     jLabel11.getText(),
                     jTextField5.getText(),
-                    total };
+                    totalbp };
                 tabModel.addRow(data);
 
                 totalkeseluruhan();
 
                 //cek sisa bayarnya ---
-                total = Double.parseDouble(jLabel21.getText());
-                double bayar = Double.parseDouble(jTextField9.getText());
+                Float uangmuka = Float.parseFloat(jTextField9.getText());
 
                 jLabel17.setText("Sisa Bayar");
-                jTextField8.setText(String.valueOf(total-bayar));
+                jTextField8.setText(String.valueOf(total-uangmuka));
 
                 clearTambahItem();
             }
@@ -1104,6 +1106,8 @@ public class Penerimaan_laundry extends javax.swing.JInternalFrame {
         int dialogButton = JOptionPane.YES_NO_OPTION;
         int dialogResult = JOptionPane.showConfirmDialog(this, "kolom yang terisi akan dikosongkan.\nTambahkan data baru?", "", dialogButton);
         if (dialogResult == 0) {
+                                jComboBox3.removeAllItems();
+                                jComboBox3.addItem("- Pilih Pewangi -");
                                 StartRun();
                                 clearAll();
         }else {
@@ -1114,7 +1118,7 @@ public class Penerimaan_laundry extends javax.swing.JInternalFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         getid_pewangi();
-
+        totalkeseluruhan();
         try{
             //-------------------SAVE TO TABLE LAUNDRY------------------------//
             String [] kolom = {"id_transaksi", "id_pelanggan","tanggal_masuk",
@@ -1122,7 +1126,7 @@ public class Penerimaan_laundry extends javax.swing.JInternalFrame {
                 "tanggal_estimasi","status_laundry", "status_bayar"};
             String [] isi = { jTextField7.getText(),jTextField1.getText(),
                 String.valueOf(format.format(jDateChooser1.getDate())),
-                idpewangi, jLabel21.getText(),jTextField9.getText(), jTextField8.getText(),
+                idpewangi, String.valueOf(total),jTextField9.getText(), jTextField8.getText(),
                 String.valueOf(format.format(jDateChooser2.getDate())), "Diterima",
                 (String)jComboBox4.getSelectedItem()};
             System.out.println(dbCon.queryInsert("laundry", kolom, isi));
@@ -1177,6 +1181,8 @@ public class Penerimaan_laundry extends javax.swing.JInternalFrame {
         totalkeseluruhan(); 
         if("".equals(jTextField9.getText())){
             System.out.println("doing nothing");
+            totalkeseluruhan();
+            jTextField8.setText(String.valueOf(total));
         }
         else{
             double bayar = Double.parseDouble(jTextField9.getText());

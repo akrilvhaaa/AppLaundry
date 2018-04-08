@@ -10,13 +10,13 @@
 	<field name="id_item" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="qty" class="java.lang.Integer">
+	<field name="qty" class="java.lang.Float">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="satuan" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="harga" class="java.lang.Double">
+	<field name="harga" class="java.lang.Float">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="item" class="java.lang.String">
@@ -78,7 +78,7 @@
 	</columnHeader>
 	<detail>
 		<band height="14" splitType="Stretch">
-			<textField>
+			<textField pattern="###0">
 				<reportElement x="119" y="0" width="32" height="13"/>
 				<textElement>
 					<font size="9"/>
@@ -90,7 +90,7 @@
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Double"><![CDATA[$F{harga}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.Float"><![CDATA[$F{harga}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="3" y="0" width="77" height="13"/>
