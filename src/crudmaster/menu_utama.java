@@ -4,15 +4,18 @@
  */
 package crudmaster;
 
+import applaundry.Koneksi;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import javax.swing.ImageIcon;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -22,39 +25,34 @@ import javax.swing.Timer;
  */
 public class menu_utama extends javax.swing.JFrame {
 
-    String kondisiMenu;
-    String level;
-    
+    Koneksi dbCon;
+    ResultSet rs;
+    String jabatan;
+
     public void startRun(){
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-        
-        kondisiMenu = "false";
-        //enabledMenu();
+        dbCon = new Koneksi();
         realtime();
+        internalLogin.setVisible(false);
+        jLabel6.setVisible(false);
     }
     
-    public void enabledMenu(){
-        if(kondisiMenu == "false"){
+    public void enabledMenu(String kondisi){
+        if(kondisi == "false"){
             jMenuItem9.setVisible(false);
-            
-            jMenuItem3.setEnabled(false);
-            jMenuItem2.setEnabled(false);
-            jMenuItem4.setEnabled(false);
-            jMenuItem5.setEnabled(false);
-            jMenuItem6.setEnabled(false);
-            jMenuItem12.setEnabled(false);
-            jMenuItem14.setEnabled(false);
+            jMenuItem12.setVisible(false);
+            jMenu2.setVisible(false);
+            jMenu3.setVisible(false);
+            jMenu6.setVisible(false);
         }
-        else if(kondisiMenu == "admin"){
+        else if(kondisi == "administrator"){
             jMenuItem9.setVisible(true);
             
-            jMenuItem3.setEnabled(true);
-            jMenuItem2.setEnabled(true);
-            jMenuItem4.setEnabled(true);
-            jMenuItem5.setEnabled(true);
-            jMenuItem6.setEnabled(true);
-            jMenuItem12.setEnabled(true);
-            jMenuItem14.setEnabled(true);
+            jMenuItem9.setVisible(true);
+            jMenuItem12.setVisible(true);
+            jMenu2.setVisible(true);
+            jMenu3.setVisible(true);
+            jMenu6.setVisible(true);
         }
     }
     
@@ -68,7 +66,32 @@ public class menu_utama extends javax.swing.JFrame {
     }
     
     public void login(){
-        
+        try {          
+            String password;
+            password = new String(jpPass1.getPassword());
+            String userid = jtUsername1.getText();
+            
+            rs = dbCon.eksekusiQuery("select * from admin where username = "+"'"+userid+"'"+"and password ='"+password+"'");
+            if (rs.next()){
+                String userName = rs.getString("username");    
+                jabatan = rs.getString("posisi");
+                enabledMenu("administrator");
+                
+                internalLogin.dispose();
+                jtUsername1.setText("");
+                jpPass1.setText("");
+                jLabel6.setVisible(true);
+                jLabel6.setText(userName+" - "+jabatan);
+                
+                JOptionPane.showMessageDialog(rootPane, "Terima kasih Anda telah berhasil login","INFORMASI",JOptionPane.INFORMATION_MESSAGE);
+            }
+            else {
+                JOptionPane.showMessageDialog(rootPane, "Maaf Anda salah memasukan username dan password","PERINGATAN",JOptionPane.ERROR_MESSAGE);
+                jtUsername1.setText("");
+                jpPass1.setText("");
+            }
+         } catch (Exception e) {
+        }
     }
     
     /**
@@ -77,6 +100,7 @@ public class menu_utama extends javax.swing.JFrame {
     public menu_utama() {
         initComponents();
         startRun();
+        enabledMenu("false");
     }
 
     /**
@@ -95,6 +119,17 @@ public class menu_utama extends javax.swing.JFrame {
         jSeparator6 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         jDesktopPane1 = new javax.swing.JDesktopPane();
+        internalLogin = new javax.swing.JInternalFrame();
+        jPanel8 = new javax.swing.JPanel();
+        jpPass1 = new javax.swing.JPasswordField();
+        jtUsername1 = new javax.swing.JTextField();
+        jPanel9 = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jSeparator7 = new javax.swing.JSeparator();
+        jPanel10 = new javax.swing.JPanel();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel26 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -141,6 +176,7 @@ public class menu_utama extends javax.swing.JFrame {
 
         jSeparator6.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        jLabel6.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel6.setText("ADMIN - ADMIN");
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
@@ -166,7 +202,7 @@ public class menu_utama extends javax.swing.JFrame {
                 .addContainerGap()
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel1Layout.createSequentialGroup()
-                        .add(0, 2, Short.MAX_VALUE)
+                        .add(0, 0, Short.MAX_VALUE)
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                             .add(jLabel4)
                             .add(jLabel5))
@@ -177,6 +213,120 @@ public class menu_utama extends javax.swing.JFrame {
             .add(jSeparator6)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jSeparator5)
         );
+
+        internalLogin.setClosable(true);
+        internalLogin.setTitle("Login");
+        internalLogin.setVisible(true);
+
+        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jpPass1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jpPass1.setToolTipText("isikan Password");
+        jpPass1.setMargin(new java.awt.Insets(5, 0, 5, 0));
+        jpPass1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jpPass1KeyPressed(evt);
+            }
+        });
+        jPanel8.add(jpPass1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 59, 270, 37));
+
+        jtUsername1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtUsername1.setToolTipText("isikan Username");
+        jPanel8.add(jtUsername1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 270, 37));
+
+        jButton3.setText("Login");
+        jButton3.setToolTipText("Masuk ke Aplikasi");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Cancel");
+        jButton4.setToolTipText("Batalkan Login");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        org.jdesktop.layout.GroupLayout jPanel9Layout = new org.jdesktop.layout.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jSeparator7)
+            .add(jPanel9Layout.createSequentialGroup()
+                .add(26, 26, 26)
+                .add(jButton4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 112, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(18, 18, 18)
+                .add(jButton3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 112, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel9Layout.createSequentialGroup()
+                .add(jSeparator7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jButton3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                    .add(jButton4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jPanel11.setBackground(new java.awt.Color(0, 102, 153));
+
+        jLabel26.setFont(new java.awt.Font("Abadi MT Condensed Extra Bold", 0, 36)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel26.setText("L O G I N");
+
+        org.jdesktop.layout.GroupLayout jPanel11Layout = new org.jdesktop.layout.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jLabel26, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel26, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+        );
+
+        org.jdesktop.layout.GroupLayout jPanel10Layout = new org.jdesktop.layout.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel11, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel10Layout.createSequentialGroup()
+                .add(jPanel11, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        org.jdesktop.layout.GroupLayout internalLoginLayout = new org.jdesktop.layout.GroupLayout(internalLogin.getContentPane());
+        internalLogin.getContentPane().setLayout(internalLoginLayout);
+        internalLoginLayout.setHorizontalGroup(
+            internalLoginLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel9, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(jPanel10, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(internalLoginLayout.createSequentialGroup()
+                .add(jPanel8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 291, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(0, 5, Short.MAX_VALUE))
+        );
+        internalLoginLayout.setVerticalGroup(
+            internalLoginLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(internalLoginLayout.createSequentialGroup()
+                .add(jPanel10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(jPanel8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 103, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(jPanel9, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        internalLogin.setBounds(40, 15, 320, 298);
+        jDesktopPane1.add(internalLogin, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/m_logo.png"))); // NOI18N
         jMenu1.setText("LaundryApps");
@@ -373,6 +523,12 @@ public class menu_utama extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
+        Dimension parentSize = jDesktopPane1.getSize();
+        Dimension childSize = internalLogin.getSize();
+        
+        internalLogin.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
+            
+        internalLogin.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -478,7 +634,7 @@ public class menu_utama extends javax.swing.JFrame {
         int dialogResult = JOptionPane.showConfirmDialog(this, "Apakah anda yakin untuk logout ?","", dialogButton);
         if(dialogResult == 0) {
             JOptionPane.showMessageDialog(rootPane,"anda telah logout");
-            startRun();
+            enabledMenu("false");
         } else {
           System.out.println("No Option");
         } 
@@ -532,6 +688,21 @@ public class menu_utama extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
+    private void jpPass1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpPass1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jpPass1KeyPressed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        login();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        jtUsername1.setText("");
+        jpPass1.setText("");
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -567,7 +738,11 @@ public class menu_utama extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JInternalFrame internalLogin;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -592,10 +767,19 @@ public class menu_utama extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JPasswordField jpPass1;
+    private javax.swing.JTextField jtUsername1;
     // End of variables declaration//GEN-END:variables
 }
