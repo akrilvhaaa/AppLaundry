@@ -7,6 +7,7 @@ package crudmaster;
 import applaundry.Koneksi;
 import applaundry.ResultSetTableModel;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
@@ -33,14 +34,25 @@ public class Administrator extends javax.swing.JInternalFrame {
     
     public void StartRun(){
         dbCon = new Koneksi();
+        jTextField1.setVisible(false);
+        jTextField2.setVisible(false);
 
         ClearInput();
         loadtable_admin();
         autoID();
     }
     
+    private static Administrator myInstance;
+    
+    public static Administrator getInstance() {
+        if (myInstance == null) {
+            myInstance = new Administrator();
+        }
+        return myInstance;
+    }
+    
     public void loadtable_admin(){
-        rs= dbCon.querySelectAll("admin");
+        rs= dbCon.eksekusiQuery("select id_admin, username, nama, posisi from admin ");
         tbl_admin.setModel(new ResultSetTableModel(rs));
     }
     
@@ -67,6 +79,7 @@ public class Administrator extends javax.swing.JInternalFrame {
         jt_posisi.setText("");
         jButton1.setVisible(false);
         btn_simpan.setVisible(true);
+        jButton3.setVisible(false);
     }
     
     /**
@@ -86,6 +99,17 @@ public class Administrator extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFrame1 = new javax.swing.JFrame();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jPasswordField1 = new javax.swing.JPasswordField();
+        jPasswordField2 = new javax.swing.JPasswordField();
+        jPasswordField3 = new javax.swing.JPasswordField();
+        jButton4 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
         lb_id = new javax.swing.JLabel();
         lb_uname = new javax.swing.JLabel();
         lb_nama = new javax.swing.JLabel();
@@ -104,6 +128,96 @@ public class Administrator extends javax.swing.JInternalFrame {
         ulangi_pwd = new javax.swing.JPasswordField();
         lb_posisi1 = new javax.swing.JLabel();
         lb_posisi2 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+
+        jFrame1.setSize(new java.awt.Dimension(400, 300));
+
+        jLabel1.setText("Password Lama");
+
+        jLabel2.setText("Password Baru");
+
+        jLabel3.setText("Konfirmasi Password");
+
+        jButton4.setText("Perbarui");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jTextField1.setText("jTextField1");
+
+        jTextField2.setText("jTextField2");
+
+        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(142, 142, 142)
+                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel1)
+                            .add(jLabel2)))
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(124, 124, 124)
+                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                            .add(jLabel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(jPasswordField1)
+                            .add(jPasswordField2)
+                            .add(jPasswordField3))))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
+                .add(27, 27, 27)
+                .add(jTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 30, Short.MAX_VALUE)
+                .add(jButton4)
+                .add(30, 30, 30)
+                .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(38, 38, 38))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .add(32, 32, 32)
+                .add(jLabel1)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPasswordField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(9, 9, 9)
+                .add(jLabel2)
+                .add(5, 5, 5)
+                .add(jPasswordField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabel3)
+                .add(18, 18, 18)
+                .add(jPasswordField3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jButton4)
+                    .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(0, 19, Short.MAX_VALUE))
+        );
+
+        org.jdesktop.layout.GroupLayout jFrame1Layout = new org.jdesktop.layout.GroupLayout(jFrame1.getContentPane());
+        jFrame1.getContentPane().setLayout(jFrame1Layout);
+        jFrame1Layout.setHorizontalGroup(
+            jFrame1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jFrame1Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jFrame1Layout.setVerticalGroup(
+            jFrame1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jFrame1Layout.createSequentialGroup()
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+        );
+
+        setClosable(true);
+        setIconifiable(true);
 
         lb_id.setText("id_admin");
 
@@ -119,14 +233,22 @@ public class Administrator extends javax.swing.JInternalFrame {
             }
         });
 
+        btn_simpan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/save.png"))); // NOI18N
         btn_simpan.setText("Simpan");
+        btn_simpan.setMaximumSize(new java.awt.Dimension(84, 36));
+        btn_simpan.setMinimumSize(new java.awt.Dimension(84, 36));
+        btn_simpan.setPreferredSize(new java.awt.Dimension(84, 36));
         btn_simpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_simpanActionPerformed(evt);
             }
         });
 
+        btn_batal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/batal.png"))); // NOI18N
         btn_batal.setText("Batal");
+        btn_batal.setMaximumSize(new java.awt.Dimension(78, 36));
+        btn_batal.setMinimumSize(new java.awt.Dimension(78, 36));
+        btn_batal.setPreferredSize(new java.awt.Dimension(87, 36));
         btn_batal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_batalActionPerformed(evt);
@@ -143,108 +265,147 @@ public class Administrator extends javax.swing.JInternalFrame {
             new String [] {
                 "No", "Id Admin", "Username", "Nama", "Posisi", "Aksi"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tbl_admin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbl_adminMouseClicked(evt);
             }
         });
+        tbl_admin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tbl_adminKeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl_admin);
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Modify.png"))); // NOI18N
         jButton1.setText("  Ubah  ");
+        jButton1.setMaximumSize(new java.awt.Dimension(83, 36));
+        jButton1.setMinimumSize(new java.awt.Dimension(83, 36));
+        jButton1.setPreferredSize(new java.awt.Dimension(83, 36));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/delete.png"))); // NOI18N
         jButton2.setText("Hapus");
-
-        pwd.setText("jPasswordField1");
-
-        ulangi_pwd.setText("jPasswordField1");
+        jButton2.setMaximumSize(new java.awt.Dimension(80, 37));
+        jButton2.setMinimumSize(new java.awt.Dimension(80, 37));
+        jButton2.setPreferredSize(new java.awt.Dimension(80, 37));
 
         lb_posisi1.setText("Password");
 
         lb_posisi2.setText("Ulangi Password");
+
+        jButton3.setText("Ubah Password");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
+                .add(14, 14, 14)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 550, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .add(layout.createSequentialGroup()
+                .add(21, 21, 21)
+                .add(lb_id)
+                .add(21, 21, 21)
+                .add(jt_id, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 168, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(36, 36, 36)
+                .add(lb_posisi)
+                .add(84, 84, 84)
+                .add(jt_posisi, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .add(layout.createSequentialGroup()
+                .add(21, 21, 21)
+                .add(lb_uname)
+                .add(18, 18, 18)
+                .add(jt_uname, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 168, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(32, 32, 32)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jButton3)
                     .add(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(btn_simpan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 96, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(18, 18, 18)
-                        .add(jButton1)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(jButton2)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(btn_batal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 96, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(4, 4, 4)
+                        .add(lb_posisi1))
                     .add(layout.createSequentialGroup()
-                        .add(21, 21, 21)
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                            .add(jScrollPane1)
-                            .add(layout.createSequentialGroup()
-                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                                        .add(lb_uname)
-                                        .add(org.jdesktop.layout.GroupLayout.LEADING, lb_id))
-                                    .add(lb_nama))
-                                .add(18, 18, 18)
-                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                                    .add(org.jdesktop.layout.GroupLayout.LEADING, jt_uname, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 168, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                    .add(org.jdesktop.layout.GroupLayout.LEADING, jt_id, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 168, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                    .add(jt_nama, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 168, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                .add(36, 36, 36)
-                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(layout.createSequentialGroup()
-                                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                            .add(lb_posisi)
-                                            .add(lb_posisi1))
-                                        .add(62, 62, 62))
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                                        .add(lb_posisi2)
-                                        .add(18, 18, 18)))
-                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                                    .add(org.jdesktop.layout.GroupLayout.LEADING, pwd, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                                    .add(org.jdesktop.layout.GroupLayout.LEADING, ulangi_pwd)
-                                    .add(jt_posisi))))))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .add(125, 125, 125)
+                        .add(pwd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
+            .add(layout.createSequentialGroup()
+                .add(21, 21, 21)
+                .add(lb_nama)
+                .add(45, 45, 45)
+                .add(jt_nama, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 168, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(36, 36, 36)
+                .add(lb_posisi2)
+                .add(18, 18, 18)
+                .add(ulangi_pwd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .add(layout.createSequentialGroup()
+                .add(100, 100, 100)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(btn_simpan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 96, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(4, 4, 4)
+                .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(6, 6, 6)
+                .add(btn_batal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(15, 15, 15)
+                .add(10, 10, 10)
                 .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 197, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(lb_id)
+                .add(11, 11, 11)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jt_id, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(lb_posisi)
-                    .add(jt_posisi, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jt_posisi, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(layout.createSequentialGroup()
+                        .add(6, 6, 6)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(lb_id)
+                            .add(lb_posisi))))
                 .add(14, 14, 14)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(lb_uname)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jt_uname, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jButton3)
                     .add(pwd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(lb_posisi1))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(layout.createSequentialGroup()
+                        .add(6, 6, 6)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(lb_uname)
+                            .add(lb_posisi1))))
+                .add(11, 11, 11)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jt_nama, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(lb_nama, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 16, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(ulangi_pwd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(lb_posisi2))
+                    .add(layout.createSequentialGroup()
+                        .add(6, 6, 6)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(lb_nama)
+                            .add(lb_posisi2))))
                 .add(25, 25, 25)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(btn_simpan)
-                    .add(jButton1)
-                    .add(jButton2)
-                    .add(btn_batal))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(btn_simpan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(btn_batal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
         );
+
+        ulangi_pwd.getAccessibleContext().setAccessibleName("Administrator");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -292,7 +453,18 @@ public class Administrator extends javax.swing.JInternalFrame {
                 int row = table.rowAtPoint(point);
                 if (mouseEvent.getClickCount() == 2 && row != -1) {
                     // your valueChanged overridden method
-
+                    jButton1.setVisible(true);
+                    lb_posisi1.setVisible(false);
+                    lb_posisi2.setVisible(false);
+                    pwd.setVisible(false);
+                    ulangi_pwd.setVisible(false);
+                    btn_simpan.setVisible(false);
+                    jButton3.setVisible(true);
+                    coltbl = tbl_admin.getSelectedRow();
+                    jt_id.setText(String.valueOf(tbl_admin.getValueAt(coltbl, 0)));
+                    jt_uname.setText(String.valueOf(tbl_admin.getValueAt(coltbl, 1)));
+                    jt_nama.setText(String.valueOf(tbl_admin.getValueAt(coltbl, 2)));
+                    jt_posisi.setText(String.valueOf(tbl_admin.getValueAt(coltbl, 3)));
                 }
             }
         });
@@ -300,14 +472,75 @@ public class Administrator extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tbl_adminKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbl_adminKeyReleased
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            jButton1.setVisible(true);
+            btn_simpan.setVisible(false);
+            String ukuran;
+                jButton1.setVisible(true);
+                lb_posisi1.setVisible(false);
+                lb_posisi2.setVisible(false);
+                pwd.setVisible(false);
+                ulangi_pwd.setVisible(false);
+                jButton3.setVisible(true);
+                coltbl = tbl_admin.getSelectedRow();
+                jt_id.setText(String.valueOf(tbl_admin.getValueAt(coltbl, 0)));
+                jt_uname.setText(String.valueOf(tbl_admin.getValueAt(coltbl, 1)));
+                jt_nama.setText(String.valueOf(tbl_admin.getValueAt(coltbl, 2)));
+                jt_posisi.setText(String.valueOf(tbl_admin.getValueAt(coltbl, 3)));
+        }
+    }//GEN-LAST:event_tbl_adminKeyReleased
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        jFrame1.show();
+        jFrame1.setLocationRelativeTo(null);
+        jFrame1.setAlwaysOnTop(true);
+        jTextField1.setText(String.valueOf(jt_id.getText()));
+        jTextField2.setText(String.valueOf(jt_uname.getText()));
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        if (jPasswordField2.getText().equals(jPasswordField3.getText())){
+            try{
+                String [] kolom = {"password"};
+                String [] isi = { jPasswordField2.getText()};
+                System.out.println(dbCon.queryUpdate("admin", kolom, isi, "id_admin ='"+jTextField1.getText()+"' AND username ='"+jTextField2.getText()+"' "));
+
+                JOptionPane.showMessageDialog(this,"Password berhasil diperbaharui");
+                
+            }catch (Exception ex) {
+                JOptionPane.showMessageDialog(this,"Gagal perbarui password");
+            }
+            jFrame1.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Password gagal diperbarui");
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_batal;
     private javax.swing.JButton btn_simpan;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JFrame jFrame1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JPasswordField jPasswordField2;
+    private javax.swing.JPasswordField jPasswordField3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jt_id;
     private javax.swing.JTextField jt_nama;
     private javax.swing.JTextField jt_posisi;
