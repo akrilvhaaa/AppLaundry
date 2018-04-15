@@ -5,6 +5,7 @@
 package applaundry;
 
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
+import crudmaster.main;
 import crudmaster.menu_utama;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -24,7 +25,7 @@ public class AppLaundry {
         
         try {
             UIManager.setLookAndFeel((new GraphiteLookAndFeel()));
-            new menu_utama().setVisible(true);
+            new main().setVisible(true);
         }
         catch(UnsupportedLookAndFeelException ex){
             JOptionPane.showMessageDialog(null, "tidak berfungsi");

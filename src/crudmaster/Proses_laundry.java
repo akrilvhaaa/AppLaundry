@@ -15,6 +15,7 @@ import javax.swing.JTable;
 import applaundry.Koneksi;
 import applaundry.ResultSetTableModel;
 import java.awt.event.KeyEvent;
+
 /**
  *
  * @author akrilvha
@@ -23,35 +24,34 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
 
     ResultSet rs;
     Koneksi dbCon;
-    int [] idKaryawan = new int[2];
+    int[] idKaryawan = new int[2];
     int id;
     int coltbl;
-    
     String tmp = "yyyy-MM-dd";
-    SimpleDateFormat format = new SimpleDateFormat(tmp); 
+    SimpleDateFormat format = new SimpleDateFormat(tmp);
     Date dateNow = new Date();
-    
+    String idkar0, idkar1;
     private static Proses_laundry myInstance;
-    
+
     public static Proses_laundry getInstance() {
         if (myInstance == null) {
             myInstance = new Proses_laundry();
         }
         return myInstance;
     }
-    
-    public void StartRun(){
+
+    public void StartRun() {
         dbCon = new Koneksi();
-        
+
         jDateChooser1.setDate(dateNow);
-        
+
         loadtable_laundry();
         loadcombo_pegawai();
         txtNama.disable();
         Reset();
     }
-    
-    public void Reset(){
+
+    public void Reset() {
         jDateChooser1.setDate(dateNow);
         loadtable_laundry();
         txtCari.setText("");
@@ -62,62 +62,72 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
         jComboBox3.setSelectedItem("Diterima");
 
     }
-    
-    public void loadtable_laundry(){
-        try{                
-            String [] kolom = {"id_transaksi", "nama_pelanggan","karyawan_cuci as pencuci","karyawan_setrika as penyetrika",
-                "DATE(tanggal_masuk) as tanggal_masuk","DATE(tanggal_selesai) as tanggal_selesai","status_laundry"};
-            rs= dbCon.querySelect(kolom, "view_laundry");
+
+    public void loadtable_laundry() {
+        try {
+            String[] kolom = {"id_transaksi", "nama_pelanggan", "karyawan_cuci as pencuci", "karyawan_setrika as penyetrika",
+                "DATE(tanggal_masuk) as tanggal_masuk", "DATE(tanggal_selesai) as tanggal_selesai", "status_laundry"};
+            rs = dbCon.querySelect(kolom, "view_laundry");
             jTable1.setModel(new ResultSetTableModel(rs));
-        }catch(Exception ex)
-        {}
+        } catch (Exception ex) {
+        }
     }
-    
-    public void loadcombo_pegawai(){
-        try{                
+
+    public void loadcombo_pegawai() {
+        try {
             rs = dbCon.querySelectAll("karyawan");
-            while(rs.next()){
+            while (rs.next()) {
                 jComboBox1.addItem(rs.getString("nama"));
                 jComboBox2.addItem(rs.getString("nama"));
             }
-        }catch(Exception ex)
-        {}
+        } catch (Exception ex) {
+        }
     }
-    
-    public void cari(){
+
+    public void cari() {
         String cari = txtCari.getText();
-        
-        String [] kolom = {"id_transaksi", "nama_pelanggan","karyawan_cuci as pencuci","karyawan_setrika as penyetrika",
-                "DATE(tanggal_masuk) as tanggal_masuk","DATE(tanggal_selesai) as tanggal_selesai","status_laundry"};
-        rs = dbCon.fcSelectCommand(kolom, "view_laundry", "id_transaksi like '%"+cari+"%' OR nama_pelanggan like '%"+cari+"%'");
-        jTable1.setModel(new ResultSetTableModel(rs)); 
-        
-         if(jTable1.getRowCount() != 0){
+
+        String[] kolom = {"id_transaksi", "nama_pelanggan", "karyawan_cuci as pencuci", "karyawan_setrika as penyetrika",
+            "DATE(tanggal_masuk) as tanggal_masuk", "DATE(tanggal_selesai) as tanggal_selesai", "status_laundry"};
+        rs = dbCon.fcSelectCommand(kolom, "view_laundry", "id_transaksi like '%" + cari + "%' OR nama_pelanggan like '%" + cari + "%'");
+        jTable1.setModel(new ResultSetTableModel(rs));
+
+        if (jTable1.getRowCount() != 0) {
             jTable1.setRowSelectionInterval(0, 0);
         }
     }
-    
-    public void getid_kar(){
-        try{
-            int i =0;
-            rs = dbCon.eksekusiQuery("select id_karyawan from Karyawan where nama IN ('"+jComboBox1.getSelectedItem()+"','"+jComboBox2.getSelectedItem()+"')");
-            while(rs.next()){
-                idKaryawan[i] = rs.getInt(1);
-                i++;
-                
+
+    public void getid_kar() {
+        try {
+
+            if (jComboBox1.getSelectedIndex() != 0) {
+                rs = dbCon.eksekusiQuery("select id_karyawan from Karyawan where nama ='" + jComboBox1.getSelectedItem() + "'");
+                while (rs.next()) {
+                    idKaryawan[0] = rs.getInt(1);
+                }
+            } else {
+                idKaryawan[0] = 0;
             }
-            
-        }catch(Exception ex)
-        {}
+
+            if (jComboBox2.getSelectedIndex() != 0) {
+                rs = dbCon.eksekusiQuery("select id_karyawan from Karyawan where nama ='" + jComboBox2.getSelectedItem() + "'");
+                while (rs.next()) {
+                    idKaryawan[1] = rs.getInt(1);
+                }
+            } else {
+                idKaryawan[1] = 0;
+            }
+        } catch (Exception ex) {
+        }
     }
-    
-    
-    public void debug(){
+
+    public void debug() {
         getid_kar();
-        
+
         System.out.println(idKaryawan[0]);
         System.out.println(idKaryawan[1]);
     }
+
     /**
      * Creates new form Proses_laundry
      */
@@ -156,8 +166,11 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         txtCari = new javax.swing.JTextField();
-        jLabel20 = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
+        jPanel6 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
 
         setClosable(true);
         setIconifiable(true);
@@ -174,6 +187,7 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setToolTipText("Klik 2 Kali untuk memilih data");
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -197,8 +211,18 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
         jLabel4.setText("Tanggal_selesai");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-pilih karyawan-" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-pilih karyawan-" }));
+        jComboBox2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox2ItemStateChanged(evt);
+            }
+        });
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Diterima", "Diproses", "Selesai" }));
 
@@ -264,11 +288,9 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
                     .add(jLabel4))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(jButton1)
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .add(1, 1, 1)))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 35, Short.MAX_VALUE)
+                    .add(jButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Informasi Data Terpilih"));
@@ -336,9 +358,50 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel20.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("PROSES LAUNDRY");
+        jPanel4.setBackground(new java.awt.Color(0, 102, 153));
+
+        org.jdesktop.layout.GroupLayout jPanel4Layout = new org.jdesktop.layout.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 61, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 0, Short.MAX_VALUE)
+        );
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/proseslaundry.png"))); // NOI18N
+        jLabel10.setText(" ");
+
+        jLabel21.setFont(new java.awt.Font("Abadi MT Condensed Extra Bold", 0, 36)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(153, 0, 0));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel21.setText("INFORMASI PROSES LAUNDRY");
+
+        org.jdesktop.layout.GroupLayout jPanel6Layout = new org.jdesktop.layout.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel6Layout.createSequentialGroup()
+                .add(jPanel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabel10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabel21)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .add(jSeparator3)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel6Layout.createSequentialGroup()
+                .add(jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel10, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel21))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jSeparator3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+        );
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -346,26 +409,20 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .add(6, 6, 6)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jSeparator2)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                     .add(layout.createSequentialGroup()
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                            .add(jLabel20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 711, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(layout.createSequentialGroup()
-                                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 711, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .add(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 711, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .add(jPanel6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(jLabel20)
-                .add(6, 6, 6)
-                .add(jSeparator2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(6, 6, 6)
+                .add(jPanel6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                     .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -382,7 +439,7 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
         jTable1.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent mouseEvent) {
-                JTable table =(JTable) mouseEvent.getSource();
+                JTable table = (JTable) mouseEvent.getSource();
                 Point point = mouseEvent.getPoint();
                 int row = table.rowAtPoint(point);
                 if (mouseEvent.getClickCount() == 2 && row != -1) {
@@ -390,26 +447,19 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
                     coltbl = jTable1.getSelectedRow();
                     txtNota.setText(String.valueOf(jTable1.getValueAt(coltbl, 0)));
                     txtNama.setText(String.valueOf(jTable1.getValueAt(coltbl, 1)));
-                    
-                    
-                    if(jTable1.getValueAt(coltbl, 2) == null && jTable1.getValueAt(coltbl, 3)==null){
-                        if(jTable1.getValueAt(coltbl, 2) == null){/*do nothing */}
-                        else{
-                            jComboBox1.setSelectedItem(jTable1.getValueAt(coltbl, 2));
-                        }
-                        
-                        if(jTable1.getValueAt(coltbl, 3)==null){/*do nothing */}
-                        else{
-                            jComboBox2.setSelectedItem(jTable1.getValueAt(coltbl, 3));
-                        }
-                    }
-                    else{
-                        jComboBox1.setSelectedItem(jTable1.getValueAt(coltbl, 2));
-                        jComboBox2.setSelectedItem(jTable1.getValueAt(coltbl, 3));
-                    }
-                    
                     jComboBox3.setSelectedItem(jTable1.getValueAt(coltbl, 6));
 
+                    if (jTable1.getValueAt(coltbl, 2) == null) {
+                        jComboBox1.setSelectedIndex(0);
+                    } else {
+                        jComboBox1.setSelectedItem(jTable1.getValueAt(coltbl, 2));
+                    }
+
+                    if (jTable1.getValueAt(coltbl, 3) == null) {
+                        jComboBox2.setSelectedIndex(0);
+                    } else {
+                        jComboBox2.setSelectedItem(jTable1.getValueAt(coltbl, 3));
+                    }
                 }
             }
         });
@@ -417,25 +467,44 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        try{
-            if(txtNota.getText().length()==0){
+        try {
+            if (txtNota.getText().length() == 0) {
                 JOptionPane.showMessageDialog(rootPane, "Nomor nota kosong, tidak ada data yang di-update!");
-            }
-            //test to commit
-            else{
+            } //test to commit
+            else {
                 getid_kar();
-                String [] kolom = {"karyawan_cuci", "karyawan_setrika","status_laundry",
-                    "tanggal_selesai"};
-                String [] isi = { String.valueOf(idKaryawan[0]),String.valueOf(idKaryawan[1]),
-                    (String)jComboBox3.getSelectedItem(),String.valueOf(format.format(jDateChooser1.getDate()))
-                };
+                //====================================
+                if (idKaryawan[0] == 0) {
+                    idkar0 = "";
+                } else {
+                    idkar0 = String.valueOf(idKaryawan[0]);
+                }
+                //====================================
+                if (idKaryawan[1] == 0) {
+                    idkar1 = "";
+                } else {
+                    idkar1 = String.valueOf(idKaryawan[1]);
+                }
+                
+                if (idKaryawan[0] == 0 || idKaryawan[1] == 0) {
+                    String[] kolom = {"karyawan_cuci", "karyawan_setrika", "status_laundry"};
+                    String[] isi = {idkar0, idkar1, (String) jComboBox3.getSelectedItem()};
 
-                System.out.println(dbCon.queryUpdate("laundry", kolom, isi, "id_transaksi ='"+txtNota.getText()+"'"));
+                    System.out.println(dbCon.queryUpdate("laundry", kolom, isi, "id_transaksi ='" + txtNota.getText() + "'"));
+                } else {
+                    String[] kolom = {"karyawan_cuci", "karyawan_setrika", "status_laundry", "tanggal_selesai"};
+                    String[] isi = {idkar0, idkar1, (String) jComboBox3.getSelectedItem(), String.valueOf(format.format(jDateChooser1.getDate()))};
 
-                JOptionPane.showMessageDialog(this,"Data Sukses Di Perbarui");
+                    System.out.println(dbCon.queryUpdate("laundry", kolom, isi, "id_transaksi ='" + txtNota.getText() + "'"));
+                }
+
+                
+                
+
+                JOptionPane.showMessageDialog(this, "Data Sukses Di Perbarui");
             }
-        }catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,"Gagal eksekusi data");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Gagal eksekusi data");
         }
 
         Reset();
@@ -454,9 +523,9 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
     private void txtCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCariKeyReleased
         // TODO add your handling code here:
         cari();
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-                 jTable1.requestFocus(true);
-            }
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jTable1.requestFocus(true);
+        }
     }//GEN-LAST:event_txtCariKeyReleased
 
     private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
@@ -465,29 +534,43 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
             coltbl = jTable1.getSelectedRow();
             txtNota.setText(String.valueOf(jTable1.getValueAt(coltbl, 0)));
             txtNama.setText(String.valueOf(jTable1.getValueAt(coltbl, 1)));
+            jComboBox3.setSelectedItem(jTable1.getValueAt(coltbl, 6));
 
-
-            if (jTable1.getValueAt(coltbl, 2) == null && jTable1.getValueAt(coltbl, 3) == null) {
-                if (jTable1.getValueAt(coltbl, 2) == null) {/*do nothing */
-
-                } else {
-                    jComboBox1.setSelectedItem(jTable1.getValueAt(coltbl, 2));
-                }
-
-                if (jTable1.getValueAt(coltbl, 3) == null) {/*do nothing */
-
-                } else {
-                    jComboBox2.setSelectedItem(jTable1.getValueAt(coltbl, 3));
-                }
+            if (jTable1.getValueAt(coltbl, 2) == null) {
+                jComboBox1.setSelectedIndex(0);
             } else {
                 jComboBox1.setSelectedItem(jTable1.getValueAt(coltbl, 2));
-                jComboBox2.setSelectedItem(jTable1.getValueAt(coltbl, 3));
             }
 
-            jComboBox3.setSelectedItem(jTable1.getValueAt(coltbl, 6));
+            if (jTable1.getValueAt(coltbl, 3) == null) {
+                jComboBox2.setSelectedIndex(0);
+            } else {
+                jComboBox2.setSelectedItem(jTable1.getValueAt(coltbl, 3));
+            }
         }
     }//GEN-LAST:event_jTable1KeyPressed
 
+    private void jComboBox2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox2ItemStateChanged
+        // TODO add your handling code here:
+        if (jComboBox1.getSelectedIndex() != 0 && jComboBox2.getSelectedIndex() != 0) {
+            jComboBox3.setSelectedIndex(2);
+        } else if (jComboBox1.getSelectedIndex() == 0 && jComboBox2.getSelectedIndex() == 0) {
+            jComboBox3.setSelectedIndex(0);
+        } else if (jComboBox1.getSelectedIndex() == 0 || jComboBox2.getSelectedIndex() == 0) {
+            jComboBox3.setSelectedIndex(1);
+        }
+    }//GEN-LAST:event_jComboBox2ItemStateChanged
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        // TODO add your handling code here:
+        if (jComboBox1.getSelectedIndex() != 0 && jComboBox2.getSelectedIndex() != 0) {
+            jComboBox3.setSelectedIndex(2);
+        } else if (jComboBox1.getSelectedIndex() == 0 && jComboBox2.getSelectedIndex() == 0) {
+            jComboBox3.setSelectedIndex(0);
+        } else if (jComboBox1.getSelectedIndex() == 0 || jComboBox2.getSelectedIndex() == 0) {
+            jComboBox3.setSelectedIndex(1);
+        }
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -496,8 +579,9 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox jComboBox3;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -505,9 +589,11 @@ public class Proses_laundry extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtCari;
     private javax.swing.JTextField txtNama;

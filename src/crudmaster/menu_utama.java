@@ -4,6 +4,7 @@
  */
 package crudmaster;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -11,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -108,33 +110,38 @@ public class menu_utama extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem14 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Sistem Informasi Laundry Kembar");
+        setTitle("SMARTLAUNDRY | Laundry Kembar");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/icon/logo.png")).getImage());
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
             }
         });
 
+        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel4.setText("Time");
 
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
+        jLabel5.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         jLabel5.setText("Your Date");
 
         jSeparator6.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jLabel6.setText("nama admin - jabatan");
+        jLabel6.setText("ADMIN - ADMIN");
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -146,31 +153,32 @@ public class menu_utama extends javax.swing.JFrame {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jSeparator6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 112, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jSeparator5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 63, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(jSeparator5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 124, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(jLabel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 87, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jSeparator5)
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .add(0, 2, Short.MAX_VALUE)
-                        .add(jLabel4))
-                    .add(jSeparator6)
                     .add(jPanel1Layout.createSequentialGroup()
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel6)
+                        .add(0, 2, Short.MAX_VALUE)
+                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(jLabel4)
                             .add(jLabel5))
-                        .add(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap())
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(jLabel6)
+                        .add(0, 0, Short.MAX_VALUE))))
+            .add(jSeparator6)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jSeparator5)
         );
 
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/m_logo.png"))); // NOI18N
         jMenu1.setText("LaundryApps");
         jMenu1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
 
@@ -202,6 +210,7 @@ public class menu_utama extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/m_emp.png"))); // NOI18N
         jMenu2.setText("Staf");
 
         jMenuItem2.setText("Admin");
@@ -222,6 +231,7 @@ public class menu_utama extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/m_cus.png"))); // NOI18N
         jMenu3.setText("Pelanggan");
 
         jMenuItem4.setText("Data Pelanggan");
@@ -234,6 +244,7 @@ public class menu_utama extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/m_laundry.png"))); // NOI18N
         jMenu4.setText("Laundry");
 
         jMenuItem5.setText("Pewangi Laundry");
@@ -254,6 +265,15 @@ public class menu_utama extends javax.swing.JFrame {
         jMenu4.add(jMenuItem6);
         jMenu4.add(jSeparator2);
 
+        jMenuItem13.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
+        jMenuItem13.setText("Proses Laundry");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem13);
+
         jMenuItem12.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem12.setText("Laundry Selesai");
         jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
@@ -265,6 +285,7 @@ public class menu_utama extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/m_trs.png"))); // NOI18N
         jMenu5.setText("Transaksi");
 
         jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
@@ -275,15 +296,7 @@ public class menu_utama extends javax.swing.JFrame {
             }
         });
         jMenu5.add(jMenuItem7);
-
-        jMenuItem13.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
-        jMenuItem13.setText("Proses Laundry");
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
-            }
-        });
-        jMenu5.add(jMenuItem13);
+        jMenu5.add(jSeparator3);
 
         jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F7, 0));
         jMenuItem8.setText("Ambil Laundry");
@@ -296,6 +309,7 @@ public class menu_utama extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu5);
 
+        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/m_lap.png"))); // NOI18N
         jMenu6.setText("Laporan");
 
         jMenuItem14.setText("Pendapatan Laundry");
@@ -314,8 +328,8 @@ public class menu_utama extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .add(jDesktopPane1)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -346,6 +360,13 @@ public class menu_utama extends javax.swing.JFrame {
         if (emp.isVisible()) {
         } else {
             jDesktopPane1.add(emp);
+            
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = emp.getSize();
+ 
+            //set center screen
+            emp.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
+            
             emp.setVisible(true);
         } 
     }//GEN-LAST:event_jMenuItem3ActionPerformed
@@ -361,6 +382,11 @@ public class menu_utama extends javax.swing.JFrame {
         if (csr.isVisible()) {
         } else {
             jDesktopPane1.add(csr);
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = csr.getSize();
+ 
+            //set center screen
+            csr.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
             csr.setVisible(true);
         } 
     }//GEN-LAST:event_jMenuItem4ActionPerformed
@@ -372,6 +398,11 @@ public class menu_utama extends javax.swing.JFrame {
         if (itm.isVisible()) {
         } else {
             jDesktopPane1.add(itm);
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = itm.getSize();
+ 
+            //set center screen
+            itm.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
             itm.setVisible(true);
             itm.jTabbedPane1.setSelectedIndex(1);
         } 
@@ -384,6 +415,11 @@ public class menu_utama extends javax.swing.JFrame {
         if (itm.isVisible()) {
         } else {
             jDesktopPane1.add(itm);
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = itm.getSize();
+ 
+            //set center screen
+            itm.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
             itm.setVisible(true);
             itm.jTabbedPane1.setSelectedIndex(0);
         }
@@ -396,6 +432,11 @@ public class menu_utama extends javax.swing.JFrame {
         if (pnl.isVisible()) {
         } else {
             jDesktopPane1.add(pnl);
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = pnl.getSize();
+ 
+            //set center screen
+            pnl.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
             pnl.setVisible(true);
         } 
     }//GEN-LAST:event_jMenuItem7ActionPerformed
@@ -407,6 +448,11 @@ public class menu_utama extends javax.swing.JFrame {
         if (abl.isVisible()) {
         } else {
             jDesktopPane1.add(abl);
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = abl.getSize();
+ 
+            //set center screen
+            abl.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
             abl.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem8ActionPerformed
@@ -445,6 +491,11 @@ public class menu_utama extends javax.swing.JFrame {
         if (prl.isVisible()) {
         } else {
             jDesktopPane1.add(prl);
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = prl.getSize();
+ 
+            //set center screen
+            prl.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
             prl.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem13ActionPerformed
@@ -456,6 +507,11 @@ public class menu_utama extends javax.swing.JFrame {
         if (lds.isVisible()) {
         } else {
             jDesktopPane1.add(lds);
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = lds.getSize();
+ 
+            //set center screen
+            lds.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
             lds.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem12ActionPerformed
@@ -467,6 +523,11 @@ public class menu_utama extends javax.swing.JFrame {
         if (pdl.isVisible()) {
         } else {
             jDesktopPane1.add(pdl);
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = pdl.getSize();
+ 
+            //set center screen
+            pdl.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
             pdl.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem14ActionPerformed
@@ -533,6 +594,7 @@ public class menu_utama extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     // End of variables declaration//GEN-END:variables

@@ -47,49 +47,49 @@
 	<columnHeader>
 		<band height="39" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="29" y="3" width="78" height="34" forecolor="#000000" backcolor="#FFFF99"/>
+				<reportElement mode="Opaque" x="29" y="2" width="78" height="34" forecolor="#000000" backcolor="#FFCC99"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Kode Pelanggan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="107" y="3" width="145" height="34" forecolor="#000000" backcolor="#FFFF99"/>
+				<reportElement mode="Opaque" x="107" y="2" width="145" height="34" forecolor="#000000" backcolor="#FFCC99"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nama Pelanggan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="511" y="2" width="291" height="34" forecolor="#000000" backcolor="#FFFF99"/>
+				<reportElement mode="Opaque" x="511" y="2" width="291" height="34" forecolor="#000000" backcolor="#FFCC99"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Alamat]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="252" y="3" width="105" height="34" forecolor="#000000" backcolor="#FFFF99"/>
+				<reportElement mode="Opaque" x="252" y="2" width="105" height="34" forecolor="#000000" backcolor="#FFCC99"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Telp]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="357" y="3" width="72" height="34" forecolor="#000000" backcolor="#FFFF99"/>
+				<reportElement mode="Opaque" x="357" y="2" width="72" height="34" forecolor="#000000" backcolor="#FFCC99"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[status]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="429" y="3" width="82" height="34" forecolor="#000000" backcolor="#FFFF99"/>
+				<reportElement mode="Opaque" x="429" y="2" width="82" height="34" forecolor="#000000" backcolor="#FFCC99"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Jumlah Transaksi]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="2" width="29" height="34" forecolor="#000000" backcolor="#FFFF99"/>
+				<reportElement mode="Opaque" x="0" y="2" width="29" height="34" forecolor="#000000" backcolor="#FFCC99"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
