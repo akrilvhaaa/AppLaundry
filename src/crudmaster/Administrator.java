@@ -56,6 +56,37 @@ public class Administrator extends javax.swing.JInternalFrame {
         tbl_admin.setModel(new ResultSetTableModel(rs));
     }
     
+    public void check_pwd(){
+        try
+         {
+             rs = dbCon.eksekusiQuery("select * from admin where id_admin = '"+jTextField1.getText()+"' AND username = '"+jTextField2.getText()+"'");
+             if(rs.next()){
+                if(jTextField2.getText().equals(rs.getString("username")) && jPasswordField1.getText().equals(rs.getString("password"))){
+//                    if (jPasswordField2.getText().equals(jPasswordField3.getText())){
+//                        try{
+//                            String [] kolom = {"password"};
+//                            String [] isi = { jPasswordField2.getText()};
+//                            System.out.println(dbCon.queryUpdate("admin", kolom, isi, "id_admin ='"+jTextField1.getText()+"' AND username ='"+jTextField2.getText()+"' "));
+//
+//                            JOptionPane.showMessageDialog(this,"Password berhasil diperbaharui");
+//
+//                        }catch (Exception ex) {
+//                            JOptionPane.showMessageDialog(this,"Password baru tidak cocok");
+//                        }
+//                    }
+                    System.out.println("data sama");
+                }
+             }else{
+                    JOptionPane.showMessageDialog(null, "Password lama tidak cocok");
+             }
+         }
+         catch (Exception ex)
+         {
+             JOptionPane.showMessageDialog(this, ex.getMessage());
+         }
+        jFrame1.dispose();
+    }
+    
     public void autoID(){
         try
          {
@@ -497,6 +528,9 @@ public class Administrator extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        jPasswordField1.setText("");
+        jPasswordField2.setText("");
+        jPasswordField3.setText("");
         jFrame1.show();
         jFrame1.setLocationRelativeTo(null);
         jFrame1.setAlwaysOnTop(true);
@@ -506,21 +540,22 @@ public class Administrator extends javax.swing.JInternalFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        if (jPasswordField2.getText().equals(jPasswordField3.getText())){
-            try{
-                String [] kolom = {"password"};
-                String [] isi = { jPasswordField2.getText()};
-                System.out.println(dbCon.queryUpdate("admin", kolom, isi, "id_admin ='"+jTextField1.getText()+"' AND username ='"+jTextField2.getText()+"' "));
-
-                JOptionPane.showMessageDialog(this,"Password berhasil diperbaharui");
-                
-            }catch (Exception ex) {
-                JOptionPane.showMessageDialog(this,"Gagal perbarui password");
-            }
-            jFrame1.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Password gagal diperbarui");
-        }
+        check_pwd();
+//        if (jPasswordField2.getText().equals(jPasswordField3.getText())){
+//            try{
+//                String [] kolom = {"password"};
+//                String [] isi = { jPasswordField2.getText()};
+//                System.out.println(dbCon.queryUpdate("admin", kolom, isi, "id_admin ='"+jTextField1.getText()+"' AND username ='"+jTextField2.getText()+"' "));
+//
+//                JOptionPane.showMessageDialog(this,"Password berhasil diperbaharui");
+//                
+//            }catch (Exception ex) {
+//                JOptionPane.showMessageDialog(this,"Gagal perbarui password");
+//            }
+//            jFrame1.dispose();
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Password gagal diperbarui");
+//        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
