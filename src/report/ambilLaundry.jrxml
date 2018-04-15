@@ -59,16 +59,29 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="27" splitType="Stretch">
+		<band height="38" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="22" width="274" height="1"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="274" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="1" y="4" width="273" height="18"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
+				<reportElement x="3" y="0" width="89" height="36"/>
+				<textElement textAlignment="Center">
+					<font fontName="Cooper Black" size="15" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Laundry Kembar]]></text>
+				<text><![CDATA[LAUNDRY
+KEMBAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="95" y="3" width="179" height="31"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Outlet : Nganti, Sendangadi Mlati Sleman
+Yogyakarta 55285
+Telp : 087731391441]]></text>
 			</staticText>
 		</band>
 	</title>

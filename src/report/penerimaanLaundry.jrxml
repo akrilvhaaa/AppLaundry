@@ -62,19 +62,29 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="25" splitType="Stretch">
+		<band height="39" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="23" width="264" height="1"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="37" width="264" height="1"/>
 				<graphicElement>
 					<pen lineWidth="1.0"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="1" y="0" width="263" height="23"/>
+				<reportElement x="1" y="2" width="89" height="36"/>
 				<textElement textAlignment="Center">
-					<font size="12" isBold="true"/>
+					<font fontName="Cooper Black" size="15" isBold="true"/>
 				</textElement>
-				<text><![CDATA[LAUNDRY KEMBAR]]></text>
+				<text><![CDATA[LAUNDRY
+KEMBAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="93" y="5" width="170" height="31"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="8" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Outlet : Nganti, Sendangadi Mlati Sleman
+Yogyakarta 55285
+Telp : 087731391441]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -241,84 +251,84 @@
 	<summary>
 		<band height="83" splitType="Stretch">
 			<staticText>
-				<reportElement x="90" y="0" width="85" height="13"/>
+				<reportElement x="106" y="0" width="84" height="13"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Pembayaran]]></text>
 			</staticText>
 			<textField pattern="#,##0">
-				<reportElement x="192" y="0" width="72" height="13"/>
+				<reportElement x="207" y="0" width="57" height="13"/>
 				<textElement textAlignment="Right">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="91" y="26" width="84" height="13"/>
+				<reportElement x="106" y="26" width="84" height="13"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Sisa Pembayaran]]></text>
 			</staticText>
 			<textField pattern="#,##0">
-				<reportElement x="192" y="26" width="72" height="13"/>
+				<reportElement x="207" y="26" width="57" height="13"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{sisa_bayar}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="91" y="13" width="84" height="13"/>
+				<reportElement x="106" y="13" width="84" height="13"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Uang Muka]]></text>
 			</staticText>
 			<textField pattern="#,##0">
-				<reportElement x="192" y="13" width="72" height="13"/>
+				<reportElement x="207" y="13" width="57" height="13"/>
 				<textElement textAlignment="Right">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Double"><![CDATA[$F{uang_muka}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="175" y="0" width="4" height="13"/>
+				<reportElement x="190" y="0" width="4" height="13"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="175" y="26" width="4" height="13"/>
+				<reportElement x="190" y="26" width="4" height="13"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="175" y="13" width="4" height="13"/>
+				<reportElement x="190" y="13" width="4" height="13"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="179" y="0" width="13" height="13"/>
+				<reportElement x="194" y="0" width="13" height="13"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Rp]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="179" y="26" width="13" height="13"/>
+				<reportElement x="194" y="26" width="13" height="13"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[Rp]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="179" y="13" width="13" height="13"/>
+				<reportElement x="194" y="13" width="13" height="13"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -330,6 +340,31 @@
 					<pen lineWidth="0.5" lineStyle="Dashed" lineColor="#999999"/>
 				</graphicElement>
 			</line>
+			<rectangle>
+				<reportElement x="2" y="1" width="100" height="39"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="8" y="2" width="100" height="39"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Pengambilan barang harus disertai nota
+Kerusakan tanpa konfirmasi 
+sepenuhnya resiko konsumen
+Komplain max 1x24 jam]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="4" y="4" width="3" height="3" forecolor="#999999" backcolor="#999999"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="4" y="18" width="3" height="3" forecolor="#999999" backcolor="#999999"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="4" y="32" width="3" height="3" forecolor="#999999" backcolor="#999999"/>
+			</rectangle>
 		</band>
 	</summary>
 </jasperReport>
