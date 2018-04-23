@@ -344,13 +344,20 @@ public class menu_utama extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-//        Administrator adm = Administrator.getInstance();
-//        adm.pack();
-//        if (adm.isVisible()) {
-//        } else {
-//            jDesktopPane1.add(adm);
-//            adm.setVisible(true);
-//        }
+        Administrator adm = Administrator.getInstance();
+        adm.pack();
+        if (adm.isVisible()) {
+        } else {
+            jDesktopPane1.add(adm);
+            
+            Dimension parentSize = jDesktopPane1.getSize();
+            Dimension childSize = adm.getSize();
+ 
+            //set center screen
+            adm.setLocation((parentSize.width - childSize.width)/2, (parentSize.height - childSize.height)/2);
+            
+            adm.setVisible(true);
+        }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed

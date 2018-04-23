@@ -32,6 +32,8 @@ public class Administrator extends javax.swing.JInternalFrame {
     SimpleDateFormat format = new SimpleDateFormat(tmp); 
     Date dateNow = new Date();
     
+    String passwd;
+    
     public void StartRun(){
         dbCon = new Koneksi();
         jTextField1.setVisible(false);
@@ -39,7 +41,7 @@ public class Administrator extends javax.swing.JInternalFrame {
 
         ClearInput();
         loadtable_admin();
-        autoID();
+//        autoID();
     }
     
     private static Administrator myInstance;
@@ -57,50 +59,14 @@ public class Administrator extends javax.swing.JInternalFrame {
     }
     
     public void check_pwd(){
-        try
-         {
-             rs = dbCon.eksekusiQuery("select * from admin where id_admin = '"+jTextField1.getText()+"' AND username = '"+jTextField2.getText()+"'");
-             if(rs.next()){
-                if(jTextField2.getText().equals(rs.getString("username")) && jPasswordField1.getText().equals(rs.getString("password"))){
-//                    if (jPasswordField2.getText().equals(jPasswordField3.getText())){
-//                        try{
-//                            String [] kolom = {"password"};
-//                            String [] isi = { jPasswordField2.getText()};
-//                            System.out.println(dbCon.queryUpdate("admin", kolom, isi, "id_admin ='"+jTextField1.getText()+"' AND username ='"+jTextField2.getText()+"' "));
-//
-//                            JOptionPane.showMessageDialog(this,"Password berhasil diperbaharui");
-//
-//                        }catch (Exception ex) {
-//                            JOptionPane.showMessageDialog(this,"Password baru tidak cocok");
-//                        }
-//                    }
-                    System.out.println("data sama");
-                }
-             }else{
-                    JOptionPane.showMessageDialog(null, "Password lama tidak cocok");
-             }
-         }
-         catch (Exception ex)
-         {
-             JOptionPane.showMessageDialog(this, ex.getMessage());
-         }
-        jFrame1.dispose();
-    }
-    
-    public void autoID(){
-        try
-         {
-             rs = dbCon.eksekusiQuery("select max(id_admin) from admin");
-             while(rs.next())
-             {
-                 int no = rs.getInt(1);
-                 result = Integer.toString(no+1);
-                 jt_id.setText(result);
-                 jt_id.setEnabled(false);
-             }
-         }
-         catch (Exception ex)
-         {}
+        try {
+            rs = dbCon.eksekusiQuery("select password from admin where id_admin = '"+jTextField1.getText()+"' AND username = '"+jTextField2.getText()+"'");
+            while(rs.next()){
+                passwd = rs.getString("password");
+            }
+        } catch (Exception e) {
+        
+        }
     }
     
     public void ClearInput(){
@@ -139,8 +105,11 @@ public class Administrator extends javax.swing.JInternalFrame {
         jPasswordField2 = new javax.swing.JPasswordField();
         jPasswordField3 = new javax.swing.JPasswordField();
         jButton4 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField();
         lb_id = new javax.swing.JLabel();
         lb_uname = new javax.swing.JLabel();
         lb_nama = new javax.swing.JLabel();
@@ -161,7 +130,7 @@ public class Administrator extends javax.swing.JInternalFrame {
         lb_posisi2 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
 
-        jFrame1.setSize(new java.awt.Dimension(400, 300));
+        jFrame1.setSize(new java.awt.Dimension(347, 390));
 
         jLabel1.setText("Password Lama");
 
@@ -169,16 +138,25 @@ public class Administrator extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Konfirmasi Password");
 
+        jPasswordField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordField2ActionPerformed(evt);
+            }
+        });
+
+        jPasswordField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordField3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Modify.png"))); // NOI18N
         jButton4.setText("Perbarui");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
-
-        jTextField1.setText("jTextField1");
-
-        jTextField2.setText("jTextField2");
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -187,64 +165,109 @@ public class Administrator extends javax.swing.JInternalFrame {
             .add(jPanel1Layout.createSequentialGroup()
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel1Layout.createSequentialGroup()
-                        .add(142, 142, 142)
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel1)
-                            .add(jLabel2)))
+                        .add(28, 28, 28)
+                        .add(jLabel2)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(filler1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPanel1Layout.createSequentialGroup()
-                        .add(124, 124, 124)
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                            .add(jLabel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(jPasswordField1)
-                            .add(jPasswordField2)
-                            .add(jPasswordField3))))
+                        .addContainerGap()
+                        .add(jPasswordField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 131, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .add(jPasswordField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 131, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .add(jPasswordField3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 131, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(24, 24, 24)
+                        .add(jLabel1))
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .add(jLabel3))
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(16, 16, 16)
+                        .add(jButton4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 110, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
-                .add(27, 27, 27)
-                .add(jTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 30, Short.MAX_VALUE)
-                .add(jButton4)
-                .add(30, 30, 30)
-                .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(38, 38, 38))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
-                .add(32, 32, 32)
+                .addContainerGap()
                 .add(jLabel1)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(3, 3, 3)
                 .add(jPasswordField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(9, 9, 9)
-                .add(jLabel2)
-                .add(5, 5, 5)
-                .add(jPasswordField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(28, 28, 28)
+                        .add(filler1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(18, 18, 18)
+                        .add(jLabel2)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabel3)
+                .add(jPasswordField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(18, 18, 18)
+                .add(jLabel3)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPasswordField3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jButton4)
-                    .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(0, 19, Short.MAX_VALUE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 18, Short.MAX_VALUE)
+                .add(jButton4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 37, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
+
+        jPanel2.setBackground(new java.awt.Color(0, 153, 153));
+
+        jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel4.setText("Ubah Password");
+
+        org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(38, Short.MAX_VALUE)
+                .add(jLabel4)
+                .add(18, 18, 18))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel2Layout.createSequentialGroup()
+                .add(14, 14, 14)
+                .add(jLabel4)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        jTextField2.setText("jTextField2");
+
+        jTextField1.setText("jTextField1");
 
         org.jdesktop.layout.GroupLayout jFrame1Layout = new org.jdesktop.layout.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
         jFrame1Layout.setHorizontalGroup(
             jFrame1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jFrame1Layout.createSequentialGroup()
-                .addContainerGap()
-                .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .add(6, 6, 6)
+                .add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .add(jFrame1Layout.createSequentialGroup()
+                .add(98, 98, 98)
+                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .add(jFrame1Layout.createSequentialGroup()
+                .add(39, 39, 39)
+                .add(jTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(6, 6, 6)
+                .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
         );
         jFrame1Layout.setVerticalGroup(
             jFrame1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jFrame1Layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(6, 6, 6)
+                .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(18, 18, 18)
+                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(12, 12, 12)
+                .add(jFrame1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
         );
 
         setClosable(true);
@@ -359,7 +382,7 @@ public class Administrator extends javax.swing.JInternalFrame {
                 .add(jt_id, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 168, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(36, 36, 36)
                 .add(lb_posisi)
-                .add(84, 84, 84)
+                .add(86, 86, 86)
                 .add(jt_posisi, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
             .add(layout.createSequentialGroup()
                 .add(21, 21, 21)
@@ -368,10 +391,10 @@ public class Administrator extends javax.swing.JInternalFrame {
                 .add(jt_uname, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 168, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(32, 32, 32)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jButton3)
                     .add(layout.createSequentialGroup()
                         .add(4, 4, 4)
                         .add(lb_posisi1))
+                    .add(jButton3)
                     .add(layout.createSequentialGroup()
                         .add(125, 125, 125)
                         .add(pwd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
@@ -387,12 +410,12 @@ public class Administrator extends javax.swing.JInternalFrame {
             .add(layout.createSequentialGroup()
                 .add(100, 100, 100)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(btn_simpan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 96, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(4, 4, 4)
-                .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(6, 6, 6)
-                .add(btn_batal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 110, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(btn_simpan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 110, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(10, 10, 10)
+                .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 102, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(10, 10, 10)
+                .add(btn_batal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 106, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -431,9 +454,9 @@ public class Administrator extends javax.swing.JInternalFrame {
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(btn_simpan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                        .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(btn_batal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
+                    .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(btn_batal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         ulangi_pwd.getAccessibleContext().setAccessibleName("Administrator");
@@ -541,26 +564,66 @@ public class Administrator extends javax.swing.JInternalFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         check_pwd();
-//        if (jPasswordField2.getText().equals(jPasswordField3.getText())){
-//            try{
-//                String [] kolom = {"password"};
-//                String [] isi = { jPasswordField2.getText()};
-//                System.out.println(dbCon.queryUpdate("admin", kolom, isi, "id_admin ='"+jTextField1.getText()+"' AND username ='"+jTextField2.getText()+"' "));
-//
-//                JOptionPane.showMessageDialog(this,"Password berhasil diperbaharui");
-//                
-//            }catch (Exception ex) {
-//                JOptionPane.showMessageDialog(this,"Gagal perbarui password");
-//            }
-//            jFrame1.dispose();
-//        } else {
-//            JOptionPane.showMessageDialog(this, "Password gagal diperbarui");
-//        }
+        if (jPasswordField2.getText().equals(jPasswordField3.getText())){
+            if (passwd.equals(jPasswordField1.getText())){
+                try{
+                    String [] kolom = {"password"};
+                    String [] isi = { jPasswordField2.getText()};
+                    System.out.println(dbCon.queryUpdate("admin", kolom, isi, "id_admin ='"+jTextField1.getText()+"' AND username ='"+jTextField2.getText()+"' "));
+
+                    JOptionPane.showMessageDialog(this,"Password berhasil diperbaharui");
+
+                }catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this,"Gagal perbarui password");
+                }
+                jFrame1.dispose();
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Password Lama salah !");
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Konfirmasi Password tidak cocok dengan Password Baru !");
+            jFrame1.dispose();
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jPasswordField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordField2ActionPerformed
+
+    private void jPasswordField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField3ActionPerformed
+        // TODO add your handling code here:
+        check_pwd();
+        if (jPasswordField2.getText().equals(jPasswordField3.getText())){
+            if (passwd.equals(jPasswordField1.getText())){
+                try{
+                    String [] kolom = {"password"};
+                    String [] isi = { jPasswordField2.getText()};
+                    System.out.println(dbCon.queryUpdate("admin", kolom, isi, "id_admin ='"+jTextField1.getText()+"' AND username ='"+jTextField2.getText()+"' "));
+
+                    JOptionPane.showMessageDialog(this,"Password berhasil diperbaharui");
+
+                }catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this,"Gagal perbarui password");
+                }
+                jFrame1.dispose();
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Password Lama salah !");
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Konfirmasi Password tidak cocok dengan Password Baru !");
+            jFrame1.dispose();
+        }
+           
+    }//GEN-LAST:event_jPasswordField3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_batal;
     private javax.swing.JButton btn_simpan;
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -569,7 +632,9 @@ public class Administrator extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JPasswordField jPasswordField3;
