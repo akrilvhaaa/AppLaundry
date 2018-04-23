@@ -149,6 +149,11 @@ public class Administrator extends javax.swing.JInternalFrame {
                 jPasswordField3ActionPerformed(evt);
             }
         });
+        jPasswordField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jPasswordField3KeyReleased(evt);
+            }
+        });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Modify.png"))); // NOI18N
         jButton4.setText("Perbarui");
@@ -593,7 +598,12 @@ public class Administrator extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jPasswordField2ActionPerformed
 
     private void jPasswordField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField3ActionPerformed
+        // TODO add your handling code here:         
+    }//GEN-LAST:event_jPasswordField3ActionPerformed
+
+    private void jPasswordField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField3KeyReleased
         // TODO add your handling code here:
+    if (evt.getKeyCode() == KeyEvent.VK_ENTER) {     
         check_pwd();
         if (jPasswordField2.getText().equals(jPasswordField3.getText())){
             if (passwd.equals(jPasswordField1.getText())){
@@ -617,8 +627,8 @@ public class Administrator extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Konfirmasi Password tidak cocok dengan Password Baru !");
             jFrame1.dispose();
         }
-           
-    }//GEN-LAST:event_jPasswordField3ActionPerformed
+    }
+    }//GEN-LAST:event_jPasswordField3KeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_batal;

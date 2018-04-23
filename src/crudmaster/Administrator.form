@@ -143,6 +143,7 @@
             <Component class="javax.swing.JPasswordField" name="jPasswordField3">
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jPasswordField3ActionPerformed"/>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jPasswordField3KeyReleased"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton4">
